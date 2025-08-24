@@ -43,7 +43,7 @@ export const Google = async () => {
 
     if (userDoc.exists()) {
       // Usuario ya registrado → lo mando al dashboard
-      window.location.href = "/dashboard";
+      window.location.href = "/Dashboard";
     } else {
       // Usuario nuevo → lo mando a la página de creación de perfil
       window.location.href = "/create-user";
@@ -76,7 +76,7 @@ export const unsubcribe = (id, folder, container) => {
             class="copyBtn"
             data-link="${array.url}"
           >
-            <img src="../Icons/copy.svg" alt="Copy" /></button
+            <img src="/Icons/copy.svg" alt="Copy" /></button
           >
       `
 
