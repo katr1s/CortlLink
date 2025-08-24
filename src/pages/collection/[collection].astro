@@ -1,0 +1,137 @@
+---
+import Navigation from "../../components/Navigation.astro";
+import Layout from "../../layouts/Layout.astro";
+import "../../css/collection.css";
+
+export const prerender = false;
+
+const { collection } = Astro.params;
+---
+
+<Layout title={collection}>
+  <Navigation />
+
+  <div class="link show">
+    <form class="form">
+      <h2>New URL</h2>
+      <label for="Name">Title</label>
+      <input type="text" id="Name" class="Name" />
+      <label for="Description">Description</label>
+      <textarea id="Description" class="Description" maxlength="40"></textarea>
+      <label for="Url">Url</label>
+      <input type="text" class="Url" id="Url" />
+      <input
+        type="text"
+        style="display: none;"
+        value={collection}
+        class="collection"
+      />
+      <button>Add</button>
+    </form>
+  </div>
+
+  <div class="hero">
+    <div class="button">
+      <h1>{collection}</h1>
+      <button class="CreateLink">New</button>
+    </div>
+    <div class="content">
+      <div class="card">
+        <h3>Compras</h3>
+        <p>Caminadora de mercado libre</p>
+        <div class="buttons">
+          <a
+            href="http://cortlink.onrender.com/Ismael/Caminadora"
+            target="_blank">/Katr1s/Compras</a
+          >
+          <button
+            class="copyBtn"
+            data-link="http://cortlink.onrender.com/Ismael/Caminadora"
+          >
+            <img src="../Icons/copy.svg" alt="Copy" /></button
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { onAuthStateChanged } from "firebase/auth";
+    import { auth, db, unsubcribe } from "../../firebase";
+    import { doc, getDoc, setDoc } from "firebase/firestore";
+
+    const form = document.querySelector(".form");
+    const Link = document.querySelector(".link");
+    const CreateLink = document.querySelector(".CreateLink");
+    const collection = document.querySelector(".collection");
+    const container = document.querySelector(".content");
+
+
+    
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "/";
+      }
+
+      unsubcribe(user?.uid, collection?.value, container)
+
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      let data = docSnap.data();
+
+      form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        try {
+          const Name = document.querySelector(".Name");
+          const Description = document.querySelector(".Description");
+          const URL = document.querySelector(".Url");
+          const apiUrl = import.meta.env.PUBLIC_API_URL;
+          const cortlink = "https://cortlink.onrender.com";
+
+          const alias = Name.value.trim().replace(/\s+/g, "-").toLowerCase();
+
+          const folderRef = doc(
+            db,
+            "users",
+            user.uid,
+            collection.value,
+            alias
+          );
+
+          await setDoc(folderRef, {
+            userId: user.uid,
+            Name: Name.value,
+            Alias: alias,
+            username: data.username,
+            Description: Description.value,
+            url: `${cortlink}/${data.username}/${alias}`,
+          });
+
+          const newUrl = {
+            alias: alias,
+            user: data.username,
+            url: URL.value,
+          };
+
+          const res = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUrl),
+          });
+
+          Link?.classList.add("show")
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    });
+
+    CreateLink?.addEventListener("click", () =>{
+      Link?.classList.remove("show");
+    })
+  </script>
+</Layout>

@@ -1,0 +1,33 @@
+---
+import "../css/Navigation.css"
+---
+
+<nav>
+  <div class="logotype">
+    <a href="/">Cortlink</a>
+    <div class="tag">v1.0</div>
+  </div>
+
+  <div class="sections">
+    <a href="#" class="active">Folders</a>
+    <a href="#">Settings</a>
+    <a href="/user" class="user">
+      <img id="User" class="User" />
+    </a>
+  </div>
+</nav>
+
+<script>
+  import { onAuthStateChanged } from "firebase/auth";
+  import { auth } from "../firebase";
+
+  const photo = document.getElementById("User");
+
+  onAuthStateChanged(auth, (user) => {
+    if (user?.photoURL) {
+      photo.src = user.photoURL;
+      photo.alt = user.displayName;
+      photo.title = user.displayName
+    }
+  });
+</script>

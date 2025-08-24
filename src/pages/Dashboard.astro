@@ -1,0 +1,162 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../css/dashboard.css";
+import Navigation from "../components/Navigation.astro";
+---
+
+<Layout>
+  <Navigation />
+
+  <div class="new show">
+    <form class="createFolder">
+      <h2>New Folder</h2>
+      <div class="image">
+        <img src="./icons/folder.svg" alt="folder" class="Icon-Folder" />
+      </div>
+      <label for="Name">Name</label>
+      <input type="text" id="Name" class="Name" />
+      <label for="Icons">Icon</label>
+      <select id="Icons" class="Icons">
+        <option value="/folder.svg">Select Icon</option>
+        <option value="/deployed.svg">Deployed</option>
+        <option value="/folder.svg">Folder</option>
+        <option value="/iframe.svg">Iframe</option>
+        <option value="/movie.svg">Movie</option>
+        <option value="/shopping.svg">Shopping</option>
+        <option value="/stacks.svg">Stacks</option>
+        <option value="/star.svg">Star</option>
+        <option value="/text.svg">Document</option>
+      </select>
+      <button>Create</button>
+    </form>
+  </div>
+
+  <div class="hero">
+    <div class="content">
+      <div class="inf">
+        <h1>Folders <span class="user-collection"></span></h1>
+        <div class="inf_folder">
+          <label for="search">Search</label>
+          <input type="search" id="search" placeholder="Folder" />
+        </div>
+      </div>
+      <div class="box">
+        <button class="card">
+          <img src="./icons/folder.svg" alt="folder" />
+          <h2>New folder</h2>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    import { auth, db } from "../firebase";
+    import { onAuthStateChanged } from "firebase/auth";
+    import {
+      collection,
+      doc,
+      getDoc,
+      getDocs,
+      increment,
+      setDoc,
+      updateDoc,
+    } from "firebase/firestore";
+
+    const openForm = document.querySelector(".card");
+    const sectionForm = document.querySelector(".new");
+    const form = document.querySelector(".createFolder");
+    const selectIcon = document.querySelector(".Icons");
+    const Icon = document.querySelector(".Icon-Folder");
+    const NumberFolders = document.querySelector(".user-collection");
+    const box = document.querySelector(".box");
+
+    // Renderizar folders
+    async function folders(user) {
+      try {
+        const InformationFolder = collection(
+          db,
+          "users",
+          user?.uid,
+          "FolderInf"
+        );
+        const querySnapshot = await getDocs(InformationFolder);
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+
+          const folderDiv = document.createElement("div");
+          folderDiv.className = "folder";
+          folderDiv.innerHTML = `
+          <img src="./icons${data.Icon}" alt="folder" />
+          <h2>${data.Name}</h2>
+          <div class="buttons">
+            <h6>/${data.Name}</h6>
+            <a href="/collection/${data.Name}">Go</a>
+          </div>
+        `;
+
+          box?.appendChild(folderDiv);
+        });
+      } catch (error) {
+        console.error("Error al obtener folders:", error);
+      }
+    }
+
+    // Listener de auth
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      let data = docSnap.data();
+
+      NumberFolders.textContent = `${data?.CreateCollections}/ ${data?.collection}`;
+
+      // Crear nuevo folder
+      form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const userSnap = await getDoc(docRef);
+        const data = userSnap.data();
+
+        if (Number(data?.CreateCollections) >= Number(data?.collection)) {
+          console.log("No se pueden crear más colecciones");
+          return;
+        }
+
+        try {
+          const name = document.querySelector(".Name");
+          const folderRef = doc(db, "users", user.uid, "FolderInf", name.value);
+
+          await setDoc(folderRef, {
+            userId: user.uid,
+            Name: name.value,
+            Icon: selectIcon.value,
+          });
+
+          await updateDoc(docRef, {
+            CreateCollections: increment(1),
+          });
+
+          window.location.href = "/Dashboard";
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      // Vista previa del icono
+      selectIcon?.addEventListener("change", () => {
+        Icon.src = `./Icons${selectIcon.value}`;
+      });
+
+      // Renderizar folders
+      folders(user);
+    });
+
+    // Mostrar formulario
+    openForm?.addEventListener("click", () => {
+      sectionForm?.classList.remove("show");
+    });
+  </script>
+</Layout>

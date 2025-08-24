@@ -1,0 +1,104 @@
+nav{
+    width: 96%;
+    height: 40px;
+    padding: 10px;
+    display: flex;
+    border-radius: 0 0 14px 14px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+nav .logotype{
+    user-select: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items : center;
+}
+
+nav .logotype a{
+    font-size: 2rem;
+    text-decoration: none;
+    color: var(--White);
+}
+
+nav .sections{
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+
+nav .sections a{
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--White);
+}
+
+nav .sections button{
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: transparent;
+    border: 1px solid var(--Aquamarine);
+    color: var(--White);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+nav .sections button:hover{
+    background-color: var(--Aquamarine);
+    color: var(--Black);
+    transition: 0.5s;
+}
+
+.hero{
+    width: 96%;
+    height: calc(100vh - 40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    color: var(--White);
+}
+
+.hero h1{
+    width: 850px;
+    text-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 6rem;
+    margin: 0;
+}
+
+.hero h1 span{
+    font-size: 6rem;
+    background  : linear-gradient(90deg, var(--Aquamarine), var(--Blue_light));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-bottom: 1px solid var(--Aquamarine);
+}
+
+.hero h2{
+    font-size: 1.5rem;
+    color: var(--White);
+    opacity: 0.8;
+}
+
+
+
+.hero button{
+    width: auto;
+    padding: 10px 20px;
+    height: 50px;
+    border-radius: 24px;
+    background-color: var(--Aquamarine);
+    color: var(--Black);
+    font-size: 1.2rem;
+    border: transparent;
+    cursor: pointer;
+}

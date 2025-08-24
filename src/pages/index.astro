@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import "../css/index.css"
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout>
+	<nav>
+		<div class="logotype">
+			<a href="/">CortLink</a>
+		</div>
+
+		<div class="sections">
+			<a href="/Price">Price</a>
+			<button class="google-login" id="google-login">Login</button>
+		</div>
+	</nav>
+
+	<section class="hero">
+		<h1>Your link, <span>Shorter</span>, Smarter.</h1>
+		<h2>Make every character count with powerful link tools.</h2>
+			<button>Start Now</button>
+		
+	</section>
+
+
+	<script>
+		import { Google } from '../firebase';
+
+		document.getElementById("google-login")?.addEventListener("click", () => {
+			Google();
+		});
+	</script>
+</Layout>

@@ -1,0 +1,180 @@
+.hero{
+    width: 100%;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--White_Light);
+}
+
+.hero .button{
+    width: 97%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.hero .button button{
+    font-size: 1.3rem;
+    border-radius: 4px;
+    background-color: var(--blue);
+    border: transparent;
+    color: var(--White);
+    padding: 10px 20px;
+}
+
+.hero .button h1{
+    font-size: 2rem;
+}
+
+.hero .content{
+    width: 97%;
+    height: calc(97% - 50px);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;  
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+.hero .content .card{
+    width: 300px;
+    height: 150px;
+    background-color: var(--White);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0 10px;
+    border-radius: 14px;
+    box-shadow: 0 0 5px var(--Black_light);
+}
+
+.card .buttons{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.card a{
+    text-decoration: none;
+    color: var(--blue);
+    font-size: 1rem;
+}
+
+.card h3{
+    height: 30px;
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.card button{
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+
+    img{
+        width: 35px;
+    }
+}
+
+.card p{
+    font-size: 1rem;
+    margin: 0;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+.link{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background-color: var(--White_Light);
+    position: absolute;
+    overflow: hidden;
+
+    form{
+        width: 20%;
+        height: 350px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        background-color: var(--White);
+        padding: 10px;
+        border-radius: 14px;
+        box-shadow: 0 0 5px var(--Black_light);
+    }
+}
+
+.link h2{
+    font-size: 2rem;
+    margin: 0;
+}
+
+.link input{
+    width: 98%;
+    height: 30px;
+    outline: none;
+    font-size: 1.2rem;
+    padding-left: 5px;
+    border-radius: 4px;
+}
+
+.link label{
+    font-size: 1.2rem;
+    transform: translate(10px, 10px);
+    background-color: var(--White);
+    margin-top: 10px;
+}
+
+.link textarea{
+    width: 98%;
+    height: 50px;
+    padding: 10px 0;
+    padding-left: 5px;
+    outline: none;
+    font-size: 1.2rem;
+    overflow: hidden;
+    border-radius: 4px;
+    resize: none;
+}
+
+.link button{
+    width: 100%;
+    cursor: pointer;
+    padding: 10px;
+    margin: auto;
+    border-radius: 4px;
+    background-color: var(--blue);
+    border: transparent;
+    color: var(--White);
+    font-size: 1.4rem;
+}
+
+.show{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .hero .content {
+        height: auto;
+        gap: 20px;
+    grid-template-columns: 1fr; /* Una sola columna */
+  }
+
+  .hero .content .card {
+    width: 95%; /* Ocupa todo el ancho disponible */
+    height: 150px; /* Se adapta al contenido */
+  }
+}
