@@ -302,3 +302,34 @@ footer{
 .show{
     display: none;
 }
+
+
+@media screen and (max-width: 768px) {
+    .hero .content{
+        width: 97%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-direction: column;
+
+    }
+    .hero .content .box {
+        height: auto;
+        gap: 20px;
+        grid-template-columns: 1fr; 
+  }
+
+  .hero .content .box .card {
+    width: 100%; 
+    height: 150px;
+  }
+
+  .hero .content .box .folder {
+    width: 100%; 
+    height: 150px;
+  }
+
+  .hero .content .inf .inf_folder{
+    display: none;
+  }
+}

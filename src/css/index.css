@@ -19,7 +19,7 @@ nav .logotype{
 nav .logotype a{
     font-size: 2rem;
     text-decoration: none;
-    color: var(--White);
+    color: var(--Black);
 }
 
 nav .sections{
@@ -34,15 +34,15 @@ nav .sections{
 nav .sections a{
     font-size: 1.5rem;
     text-decoration: none;
-    color: var(--White);
+    color: var(--Black);
 }
 
 nav .sections button{
     width: 100px;
     height: 40px;
     border-radius: 4px;
-    background-color: transparent;
-    border: 1px solid var(--Aquamarine);
+    background-color: var(--Black);
+    border: 1px solid var(--Black);
     color: var(--White);
     font-size: 1.2rem;
     cursor: pointer;
@@ -62,7 +62,7 @@ nav .sections button:hover{
     align-items: center;
     flex-direction: column;
     padding: 10px;
-    color: var(--White);
+    color: var(--Black);
 }
 
 .hero h1{
@@ -77,16 +77,15 @@ nav .sections button:hover{
 
 .hero h1 span{
     font-size: 6rem;
-    background  : linear-gradient(90deg, var(--Aquamarine), var(--Blue_light));
+    background  : linear-gradient(90deg, var(--blue), var(--Blue_light));
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    border-bottom: 1px solid var(--Aquamarine);
+    border-bottom: 1px solid var(--blue);
 }
 
 .hero h2{
     font-size: 1.5rem;
-    color: var(--White);
-    opacity: 0.8;
+    color: var(--Black_light);
 }
 
 
@@ -96,9 +95,27 @@ nav .sections button:hover{
     padding: 10px 20px;
     height: 50px;
     border-radius: 24px;
-    background-color: var(--Aquamarine);
-    color: var(--Black);
+    background-color: var(--blue);
+    color: var(--White);
     font-size: 1.2rem;
     border: transparent;
     cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px){
+    .hero h1{
+        font-size: 4rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    .hero h2{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .hero h1 span{
+        font-size: 4rem;
+    }
 }
