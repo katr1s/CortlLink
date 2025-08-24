@@ -100,10 +100,11 @@
     z-index: 10;
     background-color: var(--White_Light);
     position: absolute;
-    overflow: hidden;
+    overflow: hidden;    
+}
 
-    form{
-        width: 20%;
+.link form{
+        width: 30%;
         height: 350px;
         display: flex;
         justify-content: center;
@@ -113,7 +114,6 @@
         padding: 10px;
         border-radius: 14px;
         box-shadow: 0 0 5px var(--Black_light);
-    }
 }
 
 .link h2{
@@ -175,5 +175,9 @@
   .hero .content .card {
     width: 95%; /* Ocupa todo el ancho disponible */
     height: 150px; /* Se adapta al contenido */
+  }
+
+  .link form{
+    width: 97%;
   }
 }

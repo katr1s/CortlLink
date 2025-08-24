@@ -332,4 +332,8 @@ footer{
   .hero .content .inf .inf_folder{
     display: none;
   }
+
+  .new form{
+    width: 97%;
+  }
 }
