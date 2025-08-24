@@ -76,13 +76,12 @@
 }
 
 .card button{
-    background-color: transparent;
+    background-color: var(--blue);
     border: transparent;
     cursor: pointer;
-
-    img{
-        width: 35px;
-    }
+    color: var(--White);
+    border-radius: 4px;
+    padding: 10px 20px;
 }
 
 .card p{

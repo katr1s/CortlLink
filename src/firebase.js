@@ -76,7 +76,7 @@ export const unsubcribe = (id, folder, container) => {
             class="copyBtn"
             data-link="${array.url}"
           >
-            <img src="/Icons/copy.svg" alt="Copy" /></button
+            Copy</button
           >
       `
 
