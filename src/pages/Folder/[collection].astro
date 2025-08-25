@@ -32,7 +32,11 @@ const { collection } = Astro.params;
 
   <div class="hero">
     <div class="button">
-      <h1>{collection}</h1>
+      <div class="back">
+      <a href="/Folders">Folder<a>
+      <h2>/{collection}</h2>
+      </div>
+      
       <button class="CreateLink">New</button>
     </div>
     <div class="content">
@@ -107,6 +111,10 @@ const { collection } = Astro.params;
             },
             body: JSON.stringify(newUrl),
           });
+
+          Name.value = ""
+          Description.value = ""
+          URL.value = ""
 
           Link?.classList.add("show")
         } catch (error) {

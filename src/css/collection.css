@@ -26,8 +26,20 @@
     padding: 10px 20px;
 }
 
-.hero .button h1{
+.hero .button .back{
+    width: 70%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.hero .button h2, .hero .button a{
     font-size: 2rem;
+    text-decoration: none;
+    color: var(--Black);
+    font-weight: 600;
+    margin-right: 5px;
 }
 
 .hero .content{
@@ -173,7 +185,7 @@
   }
 
   .hero .content .card {
-    width: 95%; /* Ocupa todo el ancho disponible */
+    width: 97%; /* Ocupa todo el ancho disponible */
     height: 150px; /* Se adapta al contenido */
   }
 

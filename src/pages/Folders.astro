@@ -49,9 +49,8 @@ import Navigation from "../components/Navigation.astro";
     </div>
   </div>
 
-
   <script>
-    import { auth, db } from "../firebase";
+    import { auth, db, deleteFolder } from "../firebase";
     import { onAuthStateChanged } from "firebase/auth";
     import {
       collection,
@@ -72,7 +71,7 @@ import Navigation from "../components/Navigation.astro";
     const box = document.querySelector(".box");
 
     // Renderizar folders
-    async function folders(user) {
+    async function folders(user, username) {
       try {
         const InformationFolder = collection(
           db,
@@ -88,15 +87,20 @@ import Navigation from "../components/Navigation.astro";
           const folderDiv = document.createElement("div");
           folderDiv.className = "folder";
           folderDiv.innerHTML = `
-          <img src="./icons${data.Icon}" alt="folder" />
-          <h2>${data.Name}</h2>
+            <div class="header"><h2>${data.Name}</h2><button class="Delete" id="${data.Alias}" data-folder="${data.Name}"><img src="/icons/delete.svg" alt="Edit" /> </button></div>
+            <img src="./icons${data.Icon}" alt="folder" />
           <div class="buttons">
-            <h6>/${data.Name}</h6>
-            <a href="/collection/${data.Name}">Go</a>
+            <a href="/Folder/${data.Name}"> Open</a>
+            <button class="edit"><img src="/icons/edit.svg" alt="Edit" /></button>
           </div>
         `;
 
           box?.appendChild(folderDiv);
+
+          document.querySelector(`#${data.Alias}`)?.addEventListener("click", ()=>{
+            alert(data.Alias)
+            deleteFolder(data.userId, data.Name, username)
+          })
         });
       } catch (error) {
         console.error("Error al obtener folders:", error);
@@ -127,19 +131,21 @@ import Navigation from "../components/Navigation.astro";
 
         try {
           const name = document.querySelector(".Name");
-          const folderRef = doc(db, "users", user.uid, "FolderInf", name.value);
+          const alias = Name.value.trim().replace(/\s+/g, "-").toLowerCase();
+          const folderRef = doc(db, "users", user.uid, "FolderInf", alias);
 
           await setDoc(folderRef, {
             userId: user.uid,
             Name: name.value,
             Icon: selectIcon.value,
+            Alias: alias
           });
 
           await updateDoc(docRef, {
             CreateCollections: increment(1),
           });
 
-          window.location.href = "/Dashboard";
+          window.location.href = `/Folder/${name.value}`;
         } catch (error) {
           console.log(error);
         }
@@ -151,7 +157,7 @@ import Navigation from "../components/Navigation.astro";
       });
 
       // Renderizar folders
-      folders(user);
+      folders(user, data?.username);
     });
 
     // Mostrar formulario

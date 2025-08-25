@@ -2,7 +2,13 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+} from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -13,7 +19,7 @@ const firebaseConfig = {
   storageBucket: import.meta.env.PUBLIC_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.PUBLIC_MESSAGING_SENDER_ID,
   appId: import.meta.env.PUBLIC_APP_ID,
-  measurementId: import.meta.env.PUBLIC_MEASUREMENT_ID
+  measurementId: import.meta.env.PUBLIC_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -26,13 +32,12 @@ if (typeof window !== "undefined") {
 }
 
 export const auth = getAuth(app);
-export const db = getFirestore(app)
+export const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 // Función para login con Google
 export const Google = async () => {
   try {
-    console.log("Prueba")
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     console.log("Usuario logueado:", user);
@@ -43,26 +48,24 @@ export const Google = async () => {
 
     if (userDoc.exists()) {
       // Usuario ya registrado → lo mando al dashboard
-      window.location.href = "/Dashboard";
+      window.location.href = "/Folders";
     } else {
       // Usuario nuevo → lo mando a la página de creación de perfil
       window.location.href = "/create-user";
     }
-
-    
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
   }
 };
 
 export const unsubcribe = (id, folder, container) => {
-  const DocRef = collection(db, "users", id, folder )
+  const DocRef = collection(db, "users", id, folder);
   const Snap = onSnapshot(DocRef, (snapshot) => {
     container.innerHTML = "";
     snapshot.forEach((doc) => {
-      const array = doc.data()      
-      const div = document.createElement("div")
-      div.classList.add("card")
+      const array = doc.data();
+      const div = document.createElement("div");
+      div.classList.add("card");
 
       div.innerHTML = `
         <h3>${array.Name}</h3>
@@ -78,23 +81,59 @@ export const unsubcribe = (id, folder, container) => {
           >
             Copy</button
           >
-      `
+      `;
 
       container.appendChild(div);
 
       document.querySelectorAll(".copyBtn").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const link = btn.dataset.link; // obtiene el enlace del atributo data-link
-        try {
-          await navigator.clipboard.writeText(link);
-          alert(`Enlace copiado ✅\n${link}`);
-        } catch (err) {
-          console.error("Error al copiar: ", err);
-        }
+        btn.addEventListener("click", async () => {
+          const link = btn.dataset.link; // obtiene el enlace del atributo data-link
+          try {
+            await navigator.clipboard.writeText(link);
+            alert(`Enlace copiado ✅\n${link}`);
+          } catch (err) {
+            console.error("Error al copiar: ", err);
+          }
+        });
       });
     });
-    })
-  })
+  });
 
-  return Snap
-}
+  return Snap;
+};
+
+export const deleteFolder = async (id, folder, username) => {
+  const colRef = collection(db, "users", id, folder);
+  const apiUrl = import.meta.env.PUBLIC_API_DELETE;
+
+  try {
+    const snapshot = await getDocs(colRef);
+
+    // usar for...of en vez de forEach
+    for (const snap of snapshot.docs) {
+      const data = snap.data();
+
+      // como tú usas Alias como ID del doc, funciona así:
+      const collectionDocRef = doc(db, "users", id, folder, data.Alias);
+      const FolderInf = doc(db, "users", id, "FolderInf", data.Alias)
+
+      console.log("Intentando borrar:", data.Alias);
+
+      // 1. Borrar en tu API
+      await fetch(`${apiUrl}/${username}/${data.Alias}`, {
+        method: "DELETE",
+      });
+
+      // 2. Borrar en Firestore
+      await deleteDoc(collectionDocRef);
+      await deleteDoc(FolderInf)
+
+      alert(`Documento con ID=${data.Alias} eliminado`);
+    }
+
+    console.log(`Carpeta "${folder}" eliminada correctamente`);
+  } catch (error) {
+    console.error("Error eliminando carpeta:", error);
+  }
+};
+
