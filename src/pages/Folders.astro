@@ -99,7 +99,7 @@ import Navigation from "../components/Navigation.astro";
 
           document.querySelector(`#${data.Alias}`)?.addEventListener("click", ()=>{
             alert(data.Alias)
-            deleteFolder(data.userId, data.Name, username)
+            deleteFolder(data.userId, data.Name, username, data.Alias)
           })
         });
       } catch (error) {

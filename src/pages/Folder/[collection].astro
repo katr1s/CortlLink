@@ -63,7 +63,10 @@ const { collection } = Astro.params;
         window.location.href = "/";
       }
 
-      unsubcribe(user?.uid, collection?.value, container)
+      const aliasCollection = collection.value.trim().replace(/\s+/g, "-").toLowerCase();
+
+
+      unsubcribe(user?.uid, aliasCollection, container)
 
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
@@ -85,7 +88,7 @@ const { collection } = Astro.params;
             db,
             "users",
             user.uid,
-            collection.value,
+            aliasCollection,
             alias
           );
 
@@ -96,6 +99,7 @@ const { collection } = Astro.params;
             username: data.username,
             Description: Description.value,
             url: `${cortlink}/${data.username}/${alias}`,
+            Folder: aliasCollection
           });
 
           const newUrl = {

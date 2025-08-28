@@ -102,36 +102,34 @@ export const unsubcribe = (id, folder, container) => {
   return Snap;
 };
 
-export const deleteFolder = async (id, folder, username) => {
-  const colRef = collection(db, "users", id, folder);
+export const deleteFolder = async (id, folder, username, Alias) => {
+  const colRef = collection(db, "users", id, Alias);
   const apiUrl = import.meta.env.PUBLIC_API_DELETE;
 
   try {
     const snapshot = await getDocs(colRef);
+    alert(username)
+    const Folder = doc(db, "users", id, "FolderInf", Alias)
+    await deleteDoc(Folder)
 
-    // usar for...of en vez de forEach
-    for (const snap of snapshot.docs) {
+
+    snapshot.forEach( async (snap) => {
       const data = snap.data();
+      console.log(data)
+      console.log(`/users/${id}/${data.Folder}/${data.Alias}`)
 
-      // como tú usas Alias como ID del doc, funciona así:
-      const collectionDocRef = doc(db, "users", id, folder, data.Alias);
-      const FolderInf = doc(db, "users", id, "FolderInf", data.Alias)
-
-      console.log("Intentando borrar:", data.Alias);
-
-      // 1. Borrar en tu API
       await fetch(`${apiUrl}/${username}/${data.Alias}`, {
         method: "DELETE",
       });
 
-      // 2. Borrar en Firestore
-      await deleteDoc(collectionDocRef);
-      await deleteDoc(FolderInf)
+      const DocFolder = doc(db, "users", id, data.Folder, data.Alias)
+      await deleteDoc(DocFolder)
 
-      alert(`Documento con ID=${data.Alias} eliminado`);
-    }
+      alert("Eliminado")
+    })
 
-    console.log(`Carpeta "${folder}" eliminada correctamente`);
+  
+
   } catch (error) {
     console.error("Error eliminando carpeta:", error);
   }
