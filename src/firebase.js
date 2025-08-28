@@ -7,7 +7,9 @@ import {
   deleteDoc,
   getDocs,
   getFirestore,
+  increment,
   onSnapshot,
+  updateDoc,
 } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -102,21 +104,22 @@ export const unsubcribe = (id, folder, container) => {
   return Snap;
 };
 
-export const deleteFolder = async (id, folder, username, Alias) => {
+export const deleteFolder = async (id, username, Alias) => {
   const colRef = collection(db, "users", id, Alias);
   const apiUrl = import.meta.env.PUBLIC_API_DELETE;
 
   try {
     const snapshot = await getDocs(colRef);
-    alert(username)
     const Folder = doc(db, "users", id, "FolderInf", Alias)
-    await deleteDoc(Folder)
+    const docRef = doc(db, "users", id);
+
+    await updateDoc(docRef, {
+      CreateCollections: increment(-1),
+    });
 
 
     snapshot.forEach( async (snap) => {
       const data = snap.data();
-      console.log(data)
-      console.log(`/users/${id}/${data.Folder}/${data.Alias}`)
 
       await fetch(`${apiUrl}/${username}/${data.Alias}`, {
         method: "DELETE",
@@ -125,10 +128,11 @@ export const deleteFolder = async (id, folder, username, Alias) => {
       const DocFolder = doc(db, "users", id, data.Folder, data.Alias)
       await deleteDoc(DocFolder)
 
-      alert("Eliminado")
     })
 
   
+    await deleteDoc(Folder)
+    window.location.href = `/Folders`;
 
   } catch (error) {
     console.error("Error eliminando carpeta:", error);
