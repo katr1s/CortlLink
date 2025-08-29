@@ -1,5 +1,6 @@
 ---
 import Navigation from "../../components/Navigation.astro";
+import Select from "../../components/selectplatform.astro"
 import Layout from "../../layouts/Layout.astro";
 import "../../css/collection.css";
 
@@ -14,6 +15,7 @@ const { collection } = Astro.params;
   <div class="link show">
     <form class="form">
       <h2>New URL</h2>
+      <img id="platformIcon" src="" alt="icono" style="width:30px; height:30px; vertical-align:middle; margin-left:10px; display:none;">
       <label for="Name">Title</label>
       <input type="text" id="Name" class="Name" />
       <label for="Description">Description</label>
@@ -26,6 +28,7 @@ const { collection } = Astro.params;
         value={collection}
         class="collection"
       />
+      <Select />
       <button>Add</button>
     </form>
   </div>
@@ -78,6 +81,10 @@ const { collection } = Astro.params;
         try {
           const Name = document.querySelector(".Name");
           const Description = document.querySelector(".Description");
+          const platform = document.getElementById("platformSearch");
+          const dataList = document.getElementById("platforms");
+          const option = [...dataList.options].find(opt => opt.value === platform.value);
+          const iconUrl = option.getAttribute("data-icon");
           const URL = document.querySelector(".Url");
           const apiUrl = import.meta.env.PUBLIC_API_URL;
           const cortlink = "https://cortlink.onrender.com";
@@ -99,7 +106,8 @@ const { collection } = Astro.params;
             username: data.username,
             Description: Description.value,
             url: `${cortlink}/${data.username}/${alias}`,
-            Folder: aliasCollection
+            Folder: aliasCollection,
+            platform: iconUrl
           });
 
           const newUrl = {

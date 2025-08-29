@@ -1,0 +1,71 @@
+<input list="platforms" id="platformSearch" placeholder="Buscar plataforma..." style="width:250px;">
+
+<datalist id="platforms">
+  <option value="Airbnb" data-icon="/airbnb.svg"></option>
+  <option value="AliExpress" data-icon="/aliexpress-icon.svg"></option>
+  <option value="Apple" data-icon="/apple.svg"></option>
+  <option value="Apple Music" data-icon="/apple-music-icon.svg"></option>
+  <option value="AWS" data-icon="/aws_light.svg"></option>
+  <option value="Azure" data-icon="/azure.svg"></option>
+  <option value="Discord" data-icon="/discord.svg"></option>
+  <option value="Disney+" data-icon="/disneyplus.svg"></option>
+  <option value="eBay" data-icon="/ebay.svg"></option>
+  <option value="Figma" data-icon="/figma.svg"></option>
+  <option value="Firebase" data-icon="/firebase.svg"></option>
+  <option value="GitHub" data-icon="/github_light.svg"></option>
+  <option value="Google" data-icon="/google.svg"></option>
+  <option value="InfoJobs" data-icon="/infojobs-logo.svg"></option>
+  <option value="Instagram" data-icon="/instagram.png"></option>
+  <option value="Facebook" data-icon="/facebook.png"></option>
+  <option value="Kick" data-icon="/kick-dark.svg"></option>
+  <option value="Leap Wallet" data-icon="/leap-wallet.svg"></option>
+  <option value="LinkedIn" data-icon="/linkedin.svg"></option>
+  <option value="Mercado Pago" data-icon="/mercado-pago.svg"></option>
+  <option value="Meta" data-icon="/meta.svg"></option>
+  <option value="Microsoft" data-icon="/microsoft.svg"></option>
+  <option value="Microsoft To Do" data-icon="/microsoft-todo.svg"></option>
+  <option value="Netflix" data-icon="/netflix.svg"></option>
+  <option value="Notion" data-icon="/notion.svg"></option>
+  <option value="NPM" data-icon="/npm.svg"></option>
+  <option value="Obsidian" data-icon="/obsidian.svg"></option>
+  <option value="PayPal" data-icon="/paypal.svg"></option>
+  <option value="Pinterest" data-icon="/pinterest.svg"></option>
+  <option value="Platzi" data-icon="/platzi.svg"></option>
+  <option value="Prime Video" data-icon="/prime-video.svg"></option>
+  <option value="Product Hunt" data-icon="/producthunt.svg"></option>
+  <option value="Snapchat" data-icon="/snapchat.svg"></option>
+  <option value="SoundCloud" data-icon="/soundcloud-logo.svg"></option>
+  <option value="Spotify" data-icon="/spotify.svg"></option>
+  <option value="Stack Overflow" data-icon="/stackoverflow.svg"></option>
+  <option value="Steam" data-icon="/steam.svg"></option>
+  <option value="Stripe" data-icon="/stripe.svg"></option>
+  <option value="Telegram" data-icon="/telegram.svg"></option>
+  <option value="TikTok" data-icon="/tiktok.svg"></option>
+  <option value="Twitch" data-icon="/twitch.svg"></option>
+  <option value="Udemy" data-icon="/udemy.svg"></option>
+  <option value="Unity" data-icon="/unity.svg"></option>
+  <option value="WordPress" data-icon="/wordpress.svg"></option>
+  <option value="X (Twitter)" data-icon="/x.svg"></option>
+  <option value="Xbox" data-icon="/xbox.svg"></option>
+  <option value="YouTube" data-icon="/youtube.svg"></option>
+  <option value="YouTube Music" data-icon="/youtube_music.svg"></option>
+  <option value="Zoom" data-icon="/zoom.svg"></option>
+</datalist>
+
+
+<script>
+  const input = document.getElementById("platformSearch");
+  const iconImg = document.getElementById("platformIcon");
+
+  input.addEventListener("input", () => {
+    const option = [...document.querySelectorAll("#platforms option")]
+      .find(opt => opt.value.toLowerCase() === input.value.toLowerCase());
+
+    if (option && option.dataset.icon) {
+      iconImg.src = `/Aplications${option.dataset.icon}`;
+      iconImg.style.display = "inline-block";
+    } else {
+      iconImg.style.display = "none";
+    }
+  });
+</script>

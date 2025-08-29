@@ -5,8 +5,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: var(--White_Light);
-}
+    }
 
 .hero .button{
     width: 97%;
@@ -40,6 +39,13 @@
     color: var(--Black);
     font-weight: 600;
     margin-right: 5px;
+
+}
+
+.hero .button h2{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .hero .content{
@@ -54,7 +60,7 @@
 }
 
 .hero .content .card{
-    width: 300px;
+    width: 95%;
     height: 150px;
     background-color: var(--White);
     display: flex;
@@ -63,6 +69,7 @@
     flex-direction: column;
     padding: 0 10px;
     border-radius: 14px;
+    margin-left: 1%;
     box-shadow: 0 0 5px var(--Black_light);
 }
 
@@ -82,9 +89,11 @@
 }
 
 .card h3{
+    width: auto;
     height: 30px;
     margin: 0;
     font-size: 1.3rem;
+ 
 }
 
 .card button{
@@ -117,7 +126,7 @@
 
 .link form{
         width: 30%;
-        height: 350px;
+        height: 550px;
         display: flex;
         justify-content: center;
         align-items: flex-start;
@@ -127,6 +136,8 @@
         border-radius: 14px;
         box-shadow: 0 0 5px var(--Black_light);
 }
+
+
 
 .link h2{
     font-size: 2rem;
@@ -185,7 +196,7 @@
   }
 
   .hero .content .card {
-    width: 97%; /* Ocupa todo el ancho disponible */
+    width: 94.5%; /* Ocupa todo el ancho disponible */
     height: 150px; /* Se adapta al contenido */
   }
 
