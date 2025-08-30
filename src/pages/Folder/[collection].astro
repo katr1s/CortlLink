@@ -92,7 +92,7 @@ const { collection } = Astro.params;
           );
           const iconUrl = option.getAttribute("data-icon");
 
-          const alias = Name.value.trim().replace(/\s+/g, "-").toLowerCase();
+          const alias = Name.value.trim().replace(/\s+/g, "-").toLowerCase()+ "-" + aliasCollection.trim().slice(0, 2).toLowerCase();
 
           const folderRef = doc(db, "users", user.uid, aliasCollection, alias);
 

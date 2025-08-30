@@ -60,32 +60,59 @@ export const Google = async () => {
   }
 };
 
+async function urlDelete(username, Alias){
+  const apiUrl = import.meta.env.PUBLIC_API_DELETE;
+  await fetch(`${apiUrl}/${username}/${Alias}`, {
+        method: "DELETE",
+  });
+}
+
 export const unsubcribe = (id, folder, container) => {
   const DocRef = collection(db, "users", id, folder);
   const Snap = onSnapshot(DocRef, (snapshot) => {
     container.innerHTML = "";
-    snapshot.forEach((doc) => {
-      const array = doc.data();
+    snapshot.forEach((snap) => {
+      const array = snap.data();
       const div = document.createElement("div");
       div.classList.add("card");
 
       div.innerHTML = `
-        <h3>${array.Name}</h3>
-        <p>${array.Description}</p>
-        <div class="buttons">
-          <a
-            href="${array.url}"
-            target="_blank">/${array.username}/${array.Alias}</a
-          >
-          <button
-            class="copyBtn"
-            data-link="${array.url}"
-          >
-            Copy</button
-          >
+          <div class="up">
+            <div class="title">
+              <img src="/Aplications/${array.platform}" alt"${array.platformName} />
+              <h4>${array.platformName}</h4>
+            </div>
+            <button class="copyBtn"data-link="${array.url}"><img src="/icons/copy.svg" alt="copy" /></button>
+          </div>
+
+          <div class="inf">
+            <h3>${array.Name}</h3>
+            <p>${array.Description}</p>
+          </div>
+
+          <div class="buttons">
+            <button class="deleteBtn"><img src="/icons/delete.svg" alt="copy" /></button>
+            <a href="${array.url}" target="_blank">view</a>
+          </div>
       `;
 
       container.appendChild(div);
+
+      document.querySelectorAll(".deleteBtn").forEach((btn) =>{
+        btn.addEventListener("click", async ()=>{
+          const RefDocumentDelete = doc(db, "users", `${array.userId}`,`${array.Folder}` ,`${array.Alias}`);
+
+          try{
+            console.log(`users/ ${array.userId}/${array.Folder} /${array.Alias}`)
+            urlDelete(array.username, array.Alias);
+            await deleteDoc(RefDocumentDelete);
+          }catch(error){
+            console.log(error)
+          }
+
+          
+        })
+      })
 
       document.querySelectorAll(".copyBtn").forEach((btn) => {
         btn.addEventListener("click", async () => {
@@ -121,9 +148,7 @@ export const deleteFolder = async (id, username, Alias) => {
     snapshot.forEach( async (snap) => {
       const data = snap.data();
 
-      await fetch(`${apiUrl}/${username}/${data.Alias}`, {
-        method: "DELETE",
-      });
+      urlDelete(username, `${data.Alias}`)
 
       const DocFolder = doc(db, "users", id, data.Folder, data.Alias)
       await deleteDoc(DocFolder)

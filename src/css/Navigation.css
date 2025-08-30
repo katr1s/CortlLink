@@ -4,7 +4,6 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--White_Light);
     
     a{
         text-decoration: none;
