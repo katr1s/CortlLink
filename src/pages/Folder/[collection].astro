@@ -1,6 +1,6 @@
 ---
 import Navigation from "../../components/Navigation.astro";
-import Select from "../../components/selectplatform.astro"
+import Select from "../../components/selectplatform.astro";
 import Layout from "../../layouts/Layout.astro";
 import "../../css/collection.css";
 
@@ -15,7 +15,12 @@ const { collection } = Astro.params;
   <div class="link show">
     <form class="form">
       <h2>New URL</h2>
-      <img id="platformIcon" src="" alt="icono" style="width:30px; height:30px; vertical-align:middle; margin-left:10px; display:none;">
+      <img
+        id="platformIcon"
+        src=""
+        alt="icono"
+        style="width:30px; height:30px; vertical-align:middle; margin-left:10px; display:none;"
+      />
       <label for="Name">Title</label>
       <input type="text" id="Name" class="Name" />
       <label for="Description">Description</label>
@@ -36,15 +41,12 @@ const { collection } = Astro.params;
   <div class="hero">
     <div class="button">
       <div class="back">
-      <a href="/Folders">Folder<a>
-      <h2>/{collection}</h2>
+        <a href="/Folders">Folder</a>
+        <h2>/{collection}</h2>
       </div>
-      
       <button class="CreateLink">New</button>
     </div>
-    <div class="content">
-      
-    </div>
+    <div class="content"></div>
   </div>
 
   <script>
@@ -57,47 +59,42 @@ const { collection } = Astro.params;
     const CreateLink = document.querySelector(".CreateLink");
     const collection = document.querySelector(".collection");
     const container = document.querySelector(".content");
-
-
-    
+    const Name = document.querySelector(".Name");
+    const Description = document.querySelector(".Description");
+    const platform = document.getElementById("platformSearch");
+    const dataList = document.getElementById("platforms");
+    const URL = document.querySelector(".Url");
+    const apiUrl = import.meta.env.PUBLIC_API_URL;
+    const cortlink = "https://cortlink.onrender.com";
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = "/";
       }
 
-      const aliasCollection = collection.value.trim().replace(/\s+/g, "-").toLowerCase();
-
-
-      unsubcribe(user?.uid, aliasCollection, container)
-
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
       let data = docSnap.data();
+
+      const aliasCollection = collection.value
+        .trim()
+        .replace(/\s+/g, "-")
+        .toLowerCase();
+
+      unsubcribe(user?.uid, aliasCollection, container);
 
       form?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         try {
-          const Name = document.querySelector(".Name");
-          const Description = document.querySelector(".Description");
-          const platform = document.getElementById("platformSearch");
-          const dataList = document.getElementById("platforms");
-          const option = [...dataList.options].find(opt => opt.value === platform.value);
+          const option = [...dataList.options].find(
+            (opt) => opt.value === platform.value
+          );
           const iconUrl = option.getAttribute("data-icon");
-          const URL = document.querySelector(".Url");
-          const apiUrl = import.meta.env.PUBLIC_API_URL;
-          const cortlink = "https://cortlink.onrender.com";
 
           const alias = Name.value.trim().replace(/\s+/g, "-").toLowerCase();
 
-          const folderRef = doc(
-            db,
-            "users",
-            user.uid,
-            aliasCollection,
-            alias
-          );
+          const folderRef = doc(db, "users", user.uid, aliasCollection, alias);
 
           await setDoc(folderRef, {
             userId: user.uid,
@@ -107,7 +104,8 @@ const { collection } = Astro.params;
             Description: Description.value,
             url: `${cortlink}/${data.username}/${alias}`,
             Folder: aliasCollection,
-            platform: iconUrl
+            platform: iconUrl,
+            platformName: platform.value,
           });
 
           const newUrl = {
@@ -124,19 +122,19 @@ const { collection } = Astro.params;
             body: JSON.stringify(newUrl),
           });
 
-          Name.value = ""
-          Description.value = ""
-          URL.value = ""
+          Name.value = "";
+          Description.value = "";
+          URL.value = "";
 
-          Link?.classList.add("show")
+          Link?.classList.add("show");
         } catch (error) {
           console.log(error);
         }
       });
     });
 
-    CreateLink?.addEventListener("click", () =>{
+    CreateLink?.addEventListener("click", () => {
       Link?.classList.remove("show");
-    })
+    });
   </script>
 </Layout>

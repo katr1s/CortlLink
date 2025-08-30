@@ -139,3 +139,7 @@ export const deleteFolder = async (id, username, Alias) => {
   }
 };
 
+export async function DeleteCardFolder(){
+  console.log("hello")
+}
+
