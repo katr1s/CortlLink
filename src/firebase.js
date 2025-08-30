@@ -60,12 +60,25 @@ export const Google = async () => {
   }
 };
 
-async function urlDelete(username, Alias){
+async function urlDelete(username, Alias) {
   const apiUrl = import.meta.env.PUBLIC_API_DELETE;
-  await fetch(`${apiUrl}/${username}/${Alias}`, {
-        method: "DELETE",
-  });
+
+  try {
+    const response = await fetch(`${apiUrl}/${username}/${Alias}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      alert("URL eliminada con éxito ✅");
+    } else {
+      alert("❌ Error al eliminar la URL");
+    }
+  } catch (error) {
+    console.error("Error en la petición:", error);
+    alert("⚠️ Ocurrió un error al conectar con el servidor");
+  }
 }
+
 
 export const unsubcribe = (id, folder, container) => {
   const DocRef = collection(db, "users", id, folder);
