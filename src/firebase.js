@@ -72,6 +72,7 @@ async function urlDelete(username, Alias) {
       alert("URL eliminada con éxito ✅");
     } else {
       alert("❌ Error al eliminar la URL");
+      return
     }
   } catch (error) {
     console.error("Error en la petición:", error);
