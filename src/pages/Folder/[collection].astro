@@ -13,7 +13,7 @@ const { collection } = Astro.params;
   <Navigation />
 
   <div class="link show">
-    <form class="form">
+    <form class="form" action="submit">
       <h2>New URL</h2>
       <img
         id="platformIcon"
@@ -22,11 +22,11 @@ const { collection } = Astro.params;
         style="width:30px; height:30px; vertical-align:middle; margin-left:10px; display:none;"
       />
       <label for="Name">Title</label>
-      <input type="text" id="Name" class="Name" />
+      <input type="text" id="Name" class="Name" maxlength="30" required />
       <label for="Description">Description</label>
-      <textarea id="Description" class="Description" maxlength="40"></textarea>
+      <textarea id="Description" class="Description" maxlength="40" required />
       <label for="Url">Url</label>
-      <input type="text" class="Url" id="Url" />
+      <input type="text" class="Url" id="Url" required />
       <input
         type="text"
         style="display: none;"
@@ -50,10 +50,12 @@ const { collection } = Astro.params;
   </div>
 
   <script>
+    // Import Firebase authentication and Firestore functions
     import { onAuthStateChanged } from "firebase/auth";
     import { auth, db, unsubcribe } from "../../firebase";
     import { doc, getDoc, setDoc } from "firebase/firestore";
 
+    // DOM elements
     const form = document.querySelector(".form");
     const Link = document.querySelector(".link");
     const CreateLink = document.querySelector(".CreateLink");
@@ -64,57 +66,89 @@ const { collection } = Astro.params;
     const platform = document.getElementById("platformSearch");
     const dataList = document.getElementById("platforms");
     const URL = document.querySelector(".Url");
+
+    // Environment variables and backend URL
     const apiUrl = import.meta.env.PUBLIC_API_URL;
     const cortlink = "https://cortlink.onrender.com";
 
+    // 🔹 Check user authentication
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        window.location.href = "/";
+        // Redirect to home if user is not logged in
+        window.location.href = `/`;
       }
 
+      // 🔹 Get user data from Firestore
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
       let data = docSnap.data();
 
+      // 🔹 Normalize collection name (lowercase, replace spaces with "-")
       const aliasCollection = collection.value
         .trim()
         .replace(/\s+/g, "-")
         .toLowerCase();
 
+      // 🔹 Unsubscribe previous real-time listeners and listen again
       unsubcribe(user?.uid, aliasCollection, container);
 
+      // 🔹 Form submit event
       form?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         try {
+          // Validate URL format
+          const urlValue = URL.value.trim();
+          if (!urlValue.startsWith("https://")) {
+            alert("The URL must start with https://");
+            return;
+          }
+
+          // 🔹 Sanitize alias (only letters, numbers and hyphens)
+          const rawAlias = Name.value.trim().toLowerCase();
+          const safeAlias = rawAlias
+            .replace(/\s+/g, "-") // replace spaces with "-"
+            .replace(/[^a-z0-9-]/g, ""); // remove invalid chars
+
+          // 🔹 Rebuild collection alias
+          const aliasCollection = collection.value
+            .trim()
+            .replace(/\s+/g, "-")
+            .toLowerCase();
+
+          // 🔹 Generate unique alias for this URL
+          const alias = `${safeAlias}-${aliasCollection.slice(0, 2)}`;
+
+          // 🔹 Get platform icon from selected option
           const option = [...dataList.options].find(
             (opt) => opt.value === platform.value
           );
           const iconUrl = option.getAttribute("data-icon");
 
-          const alias = Name.value.trim().replace(/\s+/g, "-").toLowerCase()+ "-" + aliasCollection.trim().slice(0, 2).toLowerCase();
-
+          // 🔹 Reference to Firestore document
           const folderRef = doc(db, "users", user.uid, aliasCollection, alias);
 
+          // 🔹 Save new URL document in Firestore
           await setDoc(folderRef, {
             userId: user.uid,
             Name: Name.value,
             Alias: alias,
             username: data.username,
             Description: Description.value,
-            url: `${cortlink}/${data.username}/${alias}`,
+            url: `${cortlink}/${data.username}/${alias}`, // shortened URL
             Folder: aliasCollection,
             platform: iconUrl,
             platformName: platform.value,
           });
 
+          // 🔹 Send original URL to backend API for shortening
           const newUrl = {
             alias: alias,
             user: data.username,
             url: URL.value,
           };
 
-          const res = await fetch(apiUrl, {
+          await fetch(apiUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -122,10 +156,12 @@ const { collection } = Astro.params;
             body: JSON.stringify(newUrl),
           });
 
+          // 🔹 Reset form inputs
           Name.value = "";
           Description.value = "";
           URL.value = "";
 
+          // Hide form again after submission
           Link?.classList.add("show");
         } catch (error) {
           console.log(error);
@@ -133,8 +169,10 @@ const { collection } = Astro.params;
       });
     });
 
+    // 🔹 Toggle form visibility when "New" button is clicked
     CreateLink?.addEventListener("click", () => {
       Link?.classList.remove("show");
     });
-  </script>
+</script>
+
 </Layout>

@@ -120,12 +120,15 @@
 .card h3 {
   width: 100%;
   height: auto;
+  overflow: hidden;
   max-height: 70%;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 2.4rem;
+  text-overflow: ellipsis;
+  position: relative;
 }
 
 .card p {
@@ -136,6 +139,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
+  padding-top: 10px;
   font-size: 1rem;
 }
 
