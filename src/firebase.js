@@ -106,7 +106,7 @@ export const unsubcribe = (id, folder, container) => {
 
           <div class="buttons">
             <button class="deleteBtn"><img src="/icons/delete.svg" alt="copy" /></button>
-            <a href="${array.url}" target="_blank">view</a>
+            <a href="https://${array.url}" target="_blank">view</a>
           </div>
       `;
 
