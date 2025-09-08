@@ -10,7 +10,7 @@ import "../css/Navigation.css"
 
   <div class="sections">
     <a href="#" class="active">Folders</a>
-    <a href="#">Settings</a>
+    <button class="logout">Log Out</button>
     <a href="/user" class="user">
       <img id="User" class="User" />
     </a>
@@ -18,7 +18,7 @@ import "../css/Navigation.css"
 </nav>
 
 <script>
-  import { onAuthStateChanged } from "firebase/auth";
+  import { onAuthStateChanged, signOut } from "firebase/auth";
   import { auth } from "../firebase";
 
   const photo = document.getElementById("User");
@@ -29,5 +29,9 @@ import "../css/Navigation.css"
       photo.alt = user.displayName;
       photo.title = user.displayName
     }
+
+    document.querySelector(".logout")?.addEventListener("click", () =>{
+      signOut(auth)
+    })
   });
 </script>

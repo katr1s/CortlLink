@@ -364,7 +364,25 @@ footer{
   }
 
   .hero .content .box .folder {
-    height: 150px;
+    height: 300px;
+
+    .header{
+        margin: 0;
+        height: 10%;
+    }
+
+    img{
+        margin-top: 0;
+    }
+
+    .buttons{
+        height: 10%;
+    }
+  }
+
+  .hero .content .box .folder .icon{
+    width: auto;
+    height: 80%;
   }
 
   .hero .content .inf .inf_folder{

@@ -1,36 +1,49 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import "../css/index.css"
+import Layout from "../layouts/Layout.astro";
+import "../css/index.css";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<nav>
-		<div class="logotype">
-			<a href="/">CortLink</a>
-		</div>
+  <nav>
+    <div class="logotype">
+      <a href="/">CortLink</a>
+    </div>
 
-		<div class="sections">
-			<a href="/Price">Price</a>
-			<button class="google-login" id="google-login">Login</button>
-		</div>
-	</nav>
+    <div class="sections">
+      <button class="google-login" id="google-login">Login</button>
+    </div>
+  </nav>
 
-	<section class="hero">
-		<h1>Your link, <span>Shorter</span>, Smarter.</h1>
-		<h2>Make every character count with powerful link tools.</h2>
-			<button>Start Now</button>
-		
-	</section>
+  <section class="hero">
+    <h1>Your link, <span>Shorter</span>, Smarter.</h1>
+    <h2>Make every character count with powerful link tools.</h2>
+    <button class="start">Start Now</button>
+  </section>
 
+  <script>
+    import { onAuthStateChanged } from "firebase/auth";
+    import { auth, Google } from "../firebase";
 
-	<script>
-		import { Google } from '../firebase';
+    onAuthStateChanged(auth, (user) => {
 
-		document.getElementById("google-login")?.addEventListener("click", () => {
-			Google();
-		});
-	</script>
+      document.getElementById("google-login")?.addEventListener("click", () => {
+        if (user) {
+          window.location.href = `/Folders`;
+        } else {
+          Google();
+        }
+      });
+
+	  document.querySelector(".start")?.addEventListener("click", () =>{
+		if (user) {
+          window.location.href = `/Folders`;
+        } else {
+          Google();
+        }
+	  })
+    });
+  </script>
 </Layout>

@@ -88,7 +88,7 @@ import Navigation from "../components/Navigation.astro";
           folderDiv.className = "folder";
           folderDiv.innerHTML = `
             <div class="header"><h2>${data.Name}</h2><button class="Delete" id="${data.Alias}" data-folder="${data.Name}"><img src="/icons/delete.svg" alt="Edit" /> </button></div>
-            <img src="./icons${data.Icon}" alt="folder" />
+            <img src="./icons${data.Icon}" alt="folder" class="icon"/>
           <div class="buttons">
             <a href="/Folder/${data.Name}"> Open</a>
             <button class="edit"><img src="/icons/edit.svg" alt="Edit" /></button>
@@ -108,7 +108,9 @@ import Navigation from "../components/Navigation.astro";
 
     // Listener de auth
     onAuthStateChanged(auth, async (user) => {
-      if (!user) return;
+      if (!user) {
+        window.location.href = `/`;
+      };
 
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
