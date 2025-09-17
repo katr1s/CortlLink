@@ -1,4 +1,10 @@
-<input list="platforms" id="platformSearch" placeholder="Buscar plataforma..." style="width:250px;" required>
+<label for="platformSearch">Platform</label>
+<input
+  list="platforms"
+  id="platformSearch"
+  placeholder="Search platform..."  
+  required
+/>
 
 <datalist id="platforms">
   <option value="Airbnb" data-icon="/airbnb.svg"></option>
@@ -54,14 +60,14 @@
   <option value="Zoom" data-icon="/zoom.svg"></option>
 </datalist>
 
-
 <script>
   const input = document.getElementById("platformSearch");
   const iconImg = document.getElementById("platformIcon");
 
   input.addEventListener("input", () => {
-    const option = [...document.querySelectorAll("#platforms option")]
-      .find(opt => opt.value.toLowerCase() === input.value.toLowerCase());
+    const option = [...document.querySelectorAll("#platforms option")].find(
+      (opt) => opt.value.toLowerCase() === input.value.toLowerCase()
+    );
 
     if (option && option.dataset.icon) {
       iconImg.src = `/Aplications${option.dataset.icon}`;
@@ -71,3 +77,4 @@
     }
   });
 </script>
+

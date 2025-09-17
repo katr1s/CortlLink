@@ -42,7 +42,6 @@ export const Google = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    console.log("Usuario logueado:", user);
 
     // Referencia al documento del usuario
     const userRef = doc(db, "users", user.uid);
@@ -69,9 +68,9 @@ async function urlDelete(username, Alias) {
     });
 
     if (response.ok) {
-      alert("URL eliminada con éxito ✅");
+      alert("Delete URL ✅");
     } else {
-      alert("❌ Error al eliminar la URL");
+      alert("Delete URL error ❌");
       return
     }
   } catch (error) {
@@ -96,7 +95,7 @@ export const unsubcribe = (id, folder, container) => {
               <img src="/Aplications/${array.platform}" alt"${array.platformName} />
               <h4>${array.platformName}</h4>
             </div>
-            <button class="copyBtn"data-link="${array.url}"><img src="/icons/copy.svg" alt="copy" /></button>
+            <button class="${array.Alias}-copy"data-link="${array.url}"><img src="/icons/copy.svg" alt="copy" /></button>
           </div>
 
           <div class="inf">
@@ -105,14 +104,14 @@ export const unsubcribe = (id, folder, container) => {
           </div>
 
           <div class="buttons">
-            <button class="deleteBtn"><img src="/icons/delete.svg" alt="copy" /></button>
+            <button class="${array.Alias}"><img src="/icons/delete.svg" alt="delete" /></button>
             <a href="https://${array.url}" target="_blank">view</a>
           </div>
       `;
 
       container.appendChild(div);
 
-      document.querySelectorAll(".deleteBtn").forEach((btn) =>{
+      document.querySelectorAll(`.${array.Alias}`).forEach((btn) =>{
         btn.addEventListener("click", async ()=>{
           const RefDocumentDelete = doc(db, "users", `${array.userId}`,`${array.Folder}` ,`${array.Alias}`);
 
@@ -128,14 +127,14 @@ export const unsubcribe = (id, folder, container) => {
         })
       })
 
-      document.querySelectorAll(".copyBtn").forEach((btn) => {
+      document.querySelectorAll(`.${array.Alias}-copy`).forEach((btn) => {
         btn.addEventListener("click", async () => {
-          const link = btn.dataset.link; // obtiene el enlace del atributo data-link
+          const link = btn.dataset.link; 
           try {
             await navigator.clipboard.writeText(link);
-            alert(`Enlace copiado ✅\n${link}`);
+            alert(`URL Copy ✅\n${link}`);
           } catch (err) {
-            console.error("Error al copiar: ", err);
+            console.error("Error copy: ", err);
           }
         });
       });

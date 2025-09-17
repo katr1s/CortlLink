@@ -6,7 +6,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--White_Light);
 }
 
 .hero .content{
