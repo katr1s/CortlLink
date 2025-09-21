@@ -151,13 +151,6 @@ const { collection } = Astro.params;
             }).then(() => {
               Link?.classList.add("show");
 
-              // 🔹 Reset form inputs
-              Name.value = "";
-              Description.value = "";
-              URL.value = "";
-              platform.value = "";
-            });
-
             // 🔹 Send original URL to backend API for shortening
             const newUrl = {
               alias: alias,
@@ -171,6 +164,13 @@ const { collection } = Astro.params;
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(newUrl),
+            });
+
+            // 🔹 Reset form inputs
+              Name.value = "";
+              Description.value = "";
+              URL.value = "";
+              platform.value = "";
             });
           }
         } catch (error) {
