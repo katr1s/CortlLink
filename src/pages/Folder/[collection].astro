@@ -148,7 +148,7 @@ const { collection } = Astro.params;
               Folder: aliasCollection,
               platform: iconUrl,
               platformName: platform.value,
-            }).then(() => {
+            }).then(async () => {
               Link?.classList.add("show");
 
             // 🔹 Send original URL to backend API for shortening
