@@ -1,11 +1,39 @@
+
+
+.bg-grid {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+
+  background-image:
+    linear-gradient(to right, rgba(71, 85, 105, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(71, 85, 105, 0.3) 1px, transparent 1px),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(139, 92, 246, 0.25) 0%,
+      rgba(139, 92, 246, 0.1) 40%,
+      transparent 80%
+    );
+
+  background-size:
+    32px 32px,
+    32px 32px,
+    100% 100%;
+}
+
+
 nav{
-    width: 96%;
+    width: 98%;
     height: 40px;
     padding: 10px;
     display: flex;
     border-radius: 0 0 14px 14px;
     justify-content: space-between;
     align-items: center;
+    z-index: 3;
 }
 
 
@@ -63,6 +91,7 @@ nav .sections button:hover{
     flex-direction: column;
     padding: 10px;
     color: var(--Black);
+    z-index: 9999;
 }
 
 .hero h1{

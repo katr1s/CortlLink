@@ -8,6 +8,55 @@
     align-items: center;
 }
 
+.background {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, #605abb62 1px, transparent 1px),
+    linear-gradient(to bottom, #605abb62 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 0;
+
+  /* Máscaras */
+  mask-image:
+    repeating-linear-gradient(
+      to right,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+  -webkit-mask-image:
+    repeating-linear-gradient(
+      to right,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
 .hero .content{
     width: 97%;
     height: 100%;
