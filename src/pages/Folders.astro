@@ -10,25 +10,31 @@ import Navigation from "../components/Navigation.astro";
 
   <div class="new show">
     <form class="createFolder">
-      <h2>New Folder</h2>
       <div class="image">
         <img src="./icons/folder.svg" alt="folder" class="Icon-Folder" />
       </div>
-      <label for="Name">Name</label>
-      <input type="text" id="Name" class="Name" />
-      <label for="Icons">Icon</label>
-      <select id="Icons" class="Icons">
-        <option value="/folder.svg">Select Icon</option>
-        <option value="/deployed.svg">Deployed</option>
-        <option value="/folder.svg">Folder</option>
-        <option value="/iframe.svg">Iframe</option>
-        <option value="/movie.svg">Movie</option>
-        <option value="/shopping.svg">Shopping</option>
-        <option value="/stacks.svg">Stacks</option>
-        <option value="/star.svg">Star</option>
-        <option value="/text.svg">Document</option>
-      </select>
-      <button>Create</button>
+      <div class="folder-create">
+        <h2>Create New Folder</h2>
+        <label for="Name">Folder Name</label>
+        <input type="text" id="Name" class="Name" />
+        <label for="Icons">Icon</label>
+        <select id="Icons" class="Icons">
+          <option value="/folder.svg">Select Icon</option>
+          <option value="/deployed.svg">Deployed</option>
+          <option value="/folder.svg">Folder</option>
+          <option value="/iframe.svg">Iframe</option>
+          <option value="/movie.svg">Movie</option>
+          <option value="/shopping.svg">Shopping</option>
+          <option value="/stacks.svg">Stacks</option>
+          <option value="/star.svg">Star</option>
+          <option value="/text.svg">Document</option>
+        </select>
+        <div class="buttons-folder">
+        <button class="create">Create Folder</button>
+
+
+        </div>
+      </div>
     </form>
   </div>
 
@@ -88,19 +94,22 @@ import Navigation from "../components/Navigation.astro";
           const folderDiv = document.createElement("div");
           folderDiv.className = "folder";
           folderDiv.innerHTML = `
-            <div class="header"><h2>${data.Name}</h2><button class="Delete" id="${data.Alias}" data-folder="${data.Name}"><img src="/icons/delete.svg" alt="Edit" /> </button></div>
+            <div class="header"><h2>${data.Name}</h2><button class="Delete" id="${data.Alias}" data-folder="${data.Name}">
+            <img src="/icons/delete.svg" alt="Edit" /> 
+            </button></div>
+            <a href="/Folder/${data.Name}" class="folder-icon">
             <img src="./icons${data.Icon}" alt="folder" class="icon"/>
-          <div class="buttons">
-            <a href="/Folder/${data.Name}"> Open</a>
-            <button class="edit"><img src="/icons/edit.svg" alt="Edit" /></button>
+            </a>
           </div>
         `;
 
           box?.appendChild(folderDiv);
 
-          document.querySelector(`#${data.Alias}`)?.addEventListener("click", ()=>{
-            deleteFolder(data.userId, username, data.Alias)
-          })
+          document
+            .querySelector(`#${data.Alias}`)
+            ?.addEventListener("click", () => {
+              deleteFolder(data.userId, username, data.Alias);
+            });
         });
       } catch (error) {
         console.error("Error al obtener folders:", error);
@@ -111,7 +120,7 @@ import Navigation from "../components/Navigation.astro";
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = `/`;
-      };
+      }
 
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
@@ -127,7 +136,6 @@ import Navigation from "../components/Navigation.astro";
         const data = userSnap.data();
 
         if (Number(data?.CreateCollections) >= Number(data?.collection)) {
-          console.log("No se pueden crear más colecciones");
           return;
         }
 
@@ -140,7 +148,7 @@ import Navigation from "../components/Navigation.astro";
             userId: user.uid,
             Name: name.value,
             Icon: selectIcon.value,
-            Alias: alias
+            Alias: alias,
           });
 
           await updateDoc(docRef, {
