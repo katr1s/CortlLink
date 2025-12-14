@@ -15,31 +15,45 @@ const { collection } = Astro.params;
 
   <div class="link show">
     <form class="form" action="submit">
-      <h2>Save URL</h2>
-      <p class="menssage">
+      <div class="box">
+        <a class="refresh">Back</a>
+        <h2>Save URL</h2>
+        <p class="menssage">
+          <span>Note:</span> Anchor text (link text) should not begin with a numeral
+        </p>
+        <label for="Name">Title</label>
+        <input
+          type="text"
+          id="Name"
+          class="Name"
+          maxlength="30"
+          required
+          placeholder="Article"
+        />
+        <label for="Description">Description</label>
+        <textarea id="Description" class="Description" maxlength="140" required
+        ></textarea>
+        <label for="Url">Url</label>
+        <input
+          type="text"
+          class="Url"
+          id="Url"
+          required
+          placeholder="cortlink.live"
+        />
+        <input
+          type="text"
+          style="display: none;"
+          value={collection}
+          class="collection"
+        />
+        <button class="mobile-show">Save</button>
+      </div>
+      <div class="box box-mobile">
+        <Select />
+        <button class="mobile-up">Save</button>
 
-      </p>
-      <img
-        id="platformIcon"
-        src=""
-        alt="icono"
-        style="width:30px; height:30px; vertical-align:middle; margin-left:10px; display:none;"
-      />
-      <label for="Name">Title</label>
-      <input type="text" id="Name" class="Name" maxlength="30" required />
-      <label for="Description">Description</label>
-      <textarea id="Description" class="Description" maxlength="40" required
-      ></textarea>
-      <label for="Url">Url</label>
-      <input type="text" class="Url" id="Url" required />
-      <input
-        type="text"
-        style="display: none;"
-        value={collection}
-        class="collection"
-      />
-      <Select />
-      <button>Add</button>
+      </div>
     </form>
   </div>
 
@@ -55,7 +69,6 @@ const { collection } = Astro.params;
   </div>
 
   <script>
-    // Import Firebase authentication and Firestore functions
     import { onAuthStateChanged } from "firebase/auth";
     import { auth, db, unsubcribe } from "../../firebase";
     import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -63,126 +76,119 @@ const { collection } = Astro.params;
     // DOM elements
     const form = document.querySelector(".form");
     const Link = document.querySelector(".link");
-    const menssage = document.querySelector(".menssage")
+    const menssage = document.querySelector(".menssage");
     const CreateLink = document.querySelector(".CreateLink");
-    const collection = document.querySelector(".collection");
+    const collectionInput = document.querySelector(".collection");
     const container = document.querySelector(".content");
     const Name = document.querySelector(".Name");
     const Description = document.querySelector(".Description");
-    const platform = document.getElementById("platformSearch");
-    const dataList = document.getElementById("platforms");
     const URL = document.querySelector(".Url");
+    const platformIconImg = document.getElementById("platformIcon");
 
-    // Environment variables and backend URL
     const apiUrl = import.meta.env.PUBLIC_API_URL;
     const cortlink = "cortlink.live";
 
-    // 🔹 Check user authentication
+    const backCollection = document
+      .querySelector(".refresh")
+      ?.addEventListener("click", () => {
+        window.location.href = `/Folder/${collectionInput.value}`;
+      });
+
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        // Redirect to home if user is not logged in
         window.location.href = `/`;
+        return;
       }
 
-      // 🔹 Get user data from Firestore
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
-      let data = docSnap.data();
+      const data = docSnap.data();
 
-      // 🔹 Normalize collection name (lowercase, replace spaces with "-")
-      const aliasCollection = collection.value
+      const aliasCollection = collectionInput.value
         .trim()
         .replace(/\s+/g, "-")
         .toLowerCase();
 
-      // 🔹 Unsubscribe previous real-time listeners and listen again
-      unsubcribe(user?.uid, aliasCollection, container);
+      unsubcribe(user.uid, aliasCollection, container);
 
-      // 🔹 Form submit event
-      form?.addEventListener("submit", async (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         try {
-          // Validate URL format
-          const urlValue = URL.value.trim();
-          if (!urlValue.startsWith("https://")) {
+          if (!URL.value.trim().startsWith("https://")) {
             alert("The URL must start with https://");
             return;
           }
 
-          // 🔹 Sanitize alias (only letters, numbers and hyphens)
           const rawAlias = Name.value.trim().toLowerCase();
           const safeAlias = rawAlias
-            .replace(/\s+/g, "-") // replace spaces with "-"
-            .replace(/[^a-z0-9-]/g, ""); // remove invalid chars
-
-          // 🔹 Rebuild collection alias
-          const aliasCollection = collection.value
-            .trim()
             .replace(/\s+/g, "-")
-            .toLowerCase();
+            .replace(/[^a-z0-9-]/g, "");
 
-          // 🔹 Generate unique alias for this URL
           const alias = `${safeAlias}-${aliasCollection.slice(0, 2)}`;
 
-          // 🔹 Get platform icon from selected option
-          const option = [...dataList.options].find(
-            (opt) => opt.value === platform.value
+          // ✅ LEER RADIO AQUÍ (CORRECTO)
+          const selectedPlatform = document.querySelector(
+            'input[name="platform"]:checked'
           );
-          const iconUrl = option.getAttribute("data-icon");
 
-          // 🔹 Reference to Firestore document
+          if (!selectedPlatform) {
+            alert("Selecciona una plataforma");
+            return;
+          }
+
+          const platformName = selectedPlatform.value;
+          const platformIcon = selectedPlatform.dataset.icon;
+
           const folderRef = doc(db, "users", user.uid, aliasCollection, alias);
+
           const validate = await getDoc(folderRef);
 
           if (validate.exists()) {
-            menssage.textContent = "ULR exist";
-          } else {
-            // 🔹 Save new URL document in Firestore
-            await setDoc(folderRef, {
-              userId: user.uid,
-              Name: Name.value,
-              Alias: alias,
-              username: data.username,
-              Description: Description.value,
-              url: `${cortlink}/${data.username}/${alias}`, // shortened URL
-              Folder: aliasCollection,
-              platform: iconUrl,
-              platformName: platform.value,
-            }).then(async () => {
-              Link?.classList.add("show");
-
-            // 🔹 Send original URL to backend API for shortening
-            const newUrl = {
-              alias: alias,
-              user: data.username,
-              url: URL.value,
-            };
-
-            const res = await fetch(apiUrl, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(newUrl),
-            });
-
-            // 🔹 Reset form inputs
-              Name.value = "";
-              Description.value = "";
-              URL.value = "";
-              platform.value = "";
-            });
+            menssage.textContent = "URL exist";
+            return;
           }
+
+          await setDoc(folderRef, {
+            userId: user.uid,
+            Name: Name.value,
+            Alias: alias,
+            username: data.username,
+            Description: Description.value,
+            url: `${cortlink}/${data.username}/${alias}`,
+            Folder: aliasCollection,
+            platform: platformIcon,
+            platformName: platformName,
+          });
+
+          const newUrl = {
+            alias: alias,
+            user: data.username,
+            url: URL.value,
+          };
+
+          await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newUrl),
+          });
+
+          // Reset
+          Name.value = "";
+          Description.value = "";
+          URL.value = "";
+          menssage.textContent = "";
+          Link.classList.add("show");
+
+          window.location.href = `/Folder/${collectionInput.value}`;
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       });
     });
 
-    // 🔹 Toggle form visibility when "New" button is clicked
-    CreateLink?.addEventListener("click", () => {
-      Link?.classList.remove("show");
+    CreateLink.addEventListener("click", () => {
+      Link.classList.remove("show");
     });
   </script>
 </Layout>

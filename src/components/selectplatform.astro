@@ -1,80 +1,127 @@
-<label for="platformSearch">Platform</label>
-<input
-  list="platforms"
-  id="platformSearch"
-  placeholder="Search platform..."  
-  required
-/>
+<div class="select-plarfom">
+  <select id="providerSelect" required>
+    <option value="">Platform</option>
+  </select>
+</div>
 
-<datalist id="platforms">
-  <option value="Airbnb" data-icon="/airbnb.svg"></option>
-  <option value="Behance" data-icon="/behance.png"></option>
-  <option value="Dribbble" data-icon="/regate.png"></option>
-  <option value="AliExpress" data-icon="/aliexpress-icon.svg"></option>
-  <option value="Apple" data-icon="/apple.svg"></option>
-  <option value="Apple Music" data-icon="/apple-music-icon.svg"></option>
-  <option value="AWS" data-icon="/aws_light.svg"></option>
-  <option value="Azure" data-icon="/azure.svg"></option>
-  <option value="Discord" data-icon="/discord.svg"></option>
-  <option value="Disney+" data-icon="/disneyplus.svg"></option>
-  <option value="eBay" data-icon="/ebay.svg"></option>
-  <option value="Figma" data-icon="/figma.svg"></option>
-  <option value="Firebase" data-icon="/firebase.svg"></option>
-  <option value="GitHub" data-icon="/github_light.svg"></option>
-  <option value="Google" data-icon="/google.svg"></option>
-  <option value="InfoJobs" data-icon="/infojobs-logo.svg"></option>
-  <option value="Instagram" data-icon="/instagram.png"></option>
-  <option value="Facebook" data-icon="/facebook.png"></option>
-  <option value="Kick" data-icon="/kick-dark.svg"></option>
-  <option value="Leap Wallet" data-icon="/leap-wallet.svg"></option>
-  <option value="LinkedIn" data-icon="/linkedin.svg"></option>
-  <option value="Mercado Pago" data-icon="/mercado-pago.svg"></option>
-  <option value="Meta" data-icon="/meta.svg"></option>
-  <option value="Microsoft" data-icon="/microsoft.svg"></option>
-  <option value="Microsoft To Do" data-icon="/microsoft-todo.svg"></option>
-  <option value="Netflix" data-icon="/netflix.svg"></option>
-  <option value="Notion" data-icon="/notion.svg"></option>
-  <option value="NPM" data-icon="/npm.svg"></option>
-  <option value="Obsidian" data-icon="/obsidian.svg"></option>
-  <option value="PayPal" data-icon="/paypal.svg"></option>
-  <option value="Pinterest" data-icon="/pinterest.svg"></option>
-  <option value="Platzi" data-icon="/platzi.svg"></option>
-  <option value="Prime Video" data-icon="/prime-video.svg"></option>
-  <option value="Product Hunt" data-icon="/producthunt.svg"></option>
-  <option value="Snapchat" data-icon="/snapchat.svg"></option>
-  <option value="SoundCloud" data-icon="/soundcloud-logo.svg"></option>
-  <option value="Spotify" data-icon="/spotify.svg"></option>
-  <option value="Stack Overflow" data-icon="/stackoverflow.svg"></option>
-  <option value="Steam" data-icon="/steam.svg"></option>
-  <option value="Stripe" data-icon="/stripe.svg"></option>
-  <option value="Telegram" data-icon="/telegram.svg"></option>
-  <option value="TikTok" data-icon="/tiktok.svg"></option>
-  <option value="Twitch" data-icon="/twitch.svg"></option>
-  <option value="Udemy" data-icon="/udemy.svg"></option>
-  <option value="Unity" data-icon="/unity.svg"></option>
-  <option value="WordPress" data-icon="/wordpress.svg"></option>
-  <option value="X (Twitter)" data-icon="/x.svg"></option>
-  <option value="Xbox" data-icon="/xbox.svg"></option>
-  <option value="YouTube" data-icon="/youtube.svg"></option>
-  <option value="YouTube Music" data-icon="/youtube_music.svg"></option>
-  <option value="Zoom" data-icon="/zoom.svg"></option>
-</datalist>
+<div id="platformRadios"></div>
 
 <script>
-  const input = document.getElementById("platformSearch");
-  const iconImg = document.getElementById("platformIcon");
+  const platformsByProvider = {
+  google: [
+    { name: "Google", icon: "/google.svg" },
+    { name: "YouTube", icon: "/youtube.svg" },
+    { name: "YouTube Music", icon: "/youtube_music.svg" },
+    { name: "Firebase", icon: "/firebase.svg" },
+  ],
 
-  input.addEventListener("input", () => {
-    const option = [...document.querySelectorAll("#platforms option")].find(
-      (opt) => opt.value.toLowerCase() === input.value.toLowerCase()
-    );
+  meta: [
+    { name: "Facebook", icon: "/facebook.png" },
+    { name: "Instagram", icon: "/instagram.png" },
+    { name: "Meta", icon: "/meta.svg" },
+  ],
 
-    if (option && option.dataset.icon) {
-      iconImg.src = `/Aplications${option.dataset.icon}`;
-      iconImg.style.display = "inline-block";
-    } else {
-      iconImg.style.display = "none";
+  microsoft: [
+    { name: "Microsoft", icon: "/microsoft.svg" },
+    { name: "Azure", icon: "/azure.svg" },
+    { name: "Xbox", icon: "/xbox.svg" },
+    { name: "Microsoft To Do", icon: "/microsoft-todo.svg" },
+  ],
+
+  amazon: [
+    { name: "AWS", icon: "/aws_light.svg" },
+    { name: "Prime Video", icon: "/prime-video.svg" },
+  ],
+
+  streaming: [
+    { name: "Netflix", icon: "/netflix.svg" },
+    { name: "Disney+", icon: "/disneyplus.svg" },
+    { name: "Apple Music", icon: "/apple-music-icon.svg" },
+    { name: "Spotify", icon: "/spotify.svg" },
+  ],
+
+  desarrollo: [
+    { name: "GitHub", icon: "/github_light.svg" },
+    { name: "NPM", icon: "/npm.svg" },
+    { name: "Figma", icon: "/figma.svg" },
+    { name: "Notion", icon: "/notion.svg" },
+    { name: "Obsidian", icon: "/obsidian.svg" },
+  ],
+
+  ecommerce: [
+    { name: "eBay", icon: "/ebay.svg" },
+    { name: "AliExpress", icon: "/aliexpress-icon.svg" },
+  ],
+
+  pagos: [
+    { name: "PayPal", icon: "/paypal.svg" },
+    { name: "Mercado Pago", icon: "/mercado-pago.svg" },
+    { name: "Apple Pay", icon: "/apple.svg" },
+    { name: "Google Pay", icon: "/google.svg" },
+  ],
+
+  otros: [
+    { name: "Discord", icon: "/discord.svg" },
+    { name: "Behance", icon: "/behance.png" },
+    { name: "Pinterest", icon: "/pinterest.svg" },
+    { name: "LinkedIn", icon: "/linkedin.svg" },
+    { name: "Kick", icon: "/kick-dark.svg" },
+    { name: "Airbnb", icon: "/airbnb.svg" },
+    { name: "Dribble", icon: "/regate.png" },
+
+  ],
+};
+
+
+  const providerSelect = document.getElementById("providerSelect");
+
+
+
+Object.keys(platformsByProvider).forEach((provider) => {
+  const option = document.createElement("option");
+  option.value = provider;
+  option.textContent =
+    provider.charAt(0).toUpperCase() + provider.slice(1);
+
+  providerSelect.appendChild(option);
+});
+
+
+  const container = document.getElementById("platformRadios");
+
+  const defaultContent = `
+    <img class="choseplatform" src="/back_save_url.png" alt="platform">
+  `;
+
+  providerSelect.addEventListener("change", () => {
+    const provider = providerSelect.value;
+
+    if (!provider) {
+      container.style.backgroundImage = "url('/back_save_url.png')";
+      container.innerHTML = "";
+      return;
     }
+
+    container.style.backgroundImage = "none";
+
+    container.innerHTML = "";
+
+    platformsByProvider[provider].forEach((platform) => {
+      const label = document.createElement("label");
+      label.classList.add("platform-item");
+
+      label.innerHTML = `
+        <input
+          type="radio"
+          name="platform"
+          value="${platform.name}"
+          data-icon="${platform.icon}"
+        >
+        <img src="/Aplications${platform.icon}" alt="${platform.name}">
+        <span>${platform.name}</span>
+      `;
+
+      container.appendChild(label);
+    });
   });
 </script>
-
