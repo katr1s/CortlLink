@@ -180,7 +180,8 @@ const { collection } = Astro.params;
           menssage.textContent = "";
           Link.classList.add("show");
 
-          window.location.href = `/Folder/${collectionInput.value}`;
+          window.location.href = `/Folder/${aliasCollection}`;
+
         } catch (error) {
           console.error(error);
         }

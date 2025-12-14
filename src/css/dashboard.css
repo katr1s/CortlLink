@@ -8,18 +8,29 @@
     align-items: center;
 }
 
-.background {
+.background{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 0;
+}
+
+/* Fondo grid punteado */
+.background::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(to right, #605abb62 1px, transparent 1px),
-    linear-gradient(to bottom, #605abb62 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 0;
+  z-index: 0;
+  pointer-events: none;
 
-  /* Máscaras */
+  background-image:
+    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px);
+  background-size: 20px 20px;
+
   mask-image:
     repeating-linear-gradient(
       to right,
@@ -34,8 +45,10 @@
       black 3px,
       transparent 3px,
       transparent 8px
-    ),
-    radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+    );
+  mask-composite: intersect;
+
+  /* Safari */
   -webkit-mask-image:
     repeating-linear-gradient(
       to right,
@@ -50,11 +63,14 @@
       black 3px,
       transparent 3px,
       transparent 8px
-    ),
-    radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
-
-  mask-composite: intersect;
+    );
   -webkit-mask-composite: source-in;
+}
+
+/* Asegura que el contenido quede encima del fondo */
+.background > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero .content{
@@ -149,14 +165,8 @@
     padding: 10px;
     border: transparent;
     cursor: pointer;
-    border-radius: 14px;
-    box-shadow: 0 0 5px var(--Black_light);
+    border: 1px solid #33415549;
     background-color: var(--White);
-}
-
-.hero .content .card:hover{
-    box-shadow: 0 0 10px var(--Black_light);
-    transition: 0.5s;
 }
 
 .hero .content .card h2{
@@ -166,6 +176,7 @@
     justify-content: center;
     align-items: center;
     margin: 0;
+    
 }
 
 .hero .content .card img{
@@ -176,7 +187,22 @@
     align-items: center;
     margin: 0;
     opacity: 0.7;
+    animation: scaleIn 4.5s ease-in-out infinite;
 }
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.95);
+    }
+    50% {
+        transform: scale(1);
+    }
+
+    100%{
+        transform: scale(0.95);
+    }
+}
+
 
 
 .hero .content .folder{
@@ -186,23 +212,13 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
-    box-shadow: 0 0 5px var(--Black_light);
-    border-radius: 14px;
-    background-color: var(--White);
+    border: 1px solid #33415549;
     text-decoration: none;
     color: var(--Black);
     margin: 0;
     position: relative;
 }
 
-.hero .content .folder:hover{
-    box-shadow: 0 0 10px var(--Black_light);
-    transition: 0.5s;
-
-    button{
-        cursor: pointer;
-    }
-}
 
 .hero .content .folder .header{
     display: flex;
@@ -227,19 +243,22 @@
 .hero .content .folder .folder-icon{
     width: 95%;
     height: 75%;
-    background-image: url(/public/icons/folder-svgrepo-com.svg);
+    background-image: url(/public/icons/folder.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70%;
     display: flex;
     justify-content: center;
+    cursor: pointer;
     align-items: center;
+    user-select: none;
 }
 
 .hero .content .folder img{
     width: 25px;
     height: 25px;
     display: flex;
+    user-select: none;
     justify-content: center;
     align-items: center;
     opacity: 0.7;
@@ -251,10 +270,9 @@
     width: 20px;
     height: 20px;
     border-radius: 100%;
+    user-select: none;
     opacity: 1;
     padding: 5px;
-    transform: translateY(18px);
-    background-color: var(--White);
 }
 
 
@@ -320,24 +338,81 @@ footer{
     width: 100%;
     height: 100vh;
     position: absolute;
-    background-color: var(--White_Light);
+    background-color: var(--White);
     z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.new form{
-    width: 80%;
-    height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    background-color: var(--White);
-    border-radius: 24px;
-    box-shadow: 0 0 5px var(--Black_light);
+.new form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 24px;
+
+  position: relative;
+  overflow: hidden; /* clave para el fondo */
 }
+
+/* Fondo grid punteado */
+.new form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px);
+  background-size: 20px 20px;
+
+  mask-image:
+    repeating-linear-gradient(
+      to right,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    );
+  mask-composite: intersect;
+
+  /* Safari */
+  -webkit-mask-image:
+    repeating-linear-gradient(
+      to right,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    );
+  -webkit-mask-composite: source-in;
+}
+
+/* Contenido del form por encima del fondo */
+.new form > * {
+  position: relative;
+  z-index: 1;
+}
+
 
 .new form .folder-create{
     width: 50%;
@@ -352,24 +427,23 @@ footer{
     width: 50%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 20px;
-    background: linear-gradient(90deg, var(--blue) 0%, var(--White) 100%);
-    background-image: url(/public/icons/folder-svgrepo-com.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 80%;
+    padding: 0 10px;
 
+    a{
+        left: 0;
+        cursor: pointer;
+        font-size: 1.4rem;
+    }
 
 
     img{
-        width: 20%;
-        background-color: var(--White);
+        width: 50%;
         border-radius: 100%;
         padding: 10px;
-        transform: translateY(70px);
-        margin: 0 auto;
     }
 
 }
@@ -381,7 +455,6 @@ footer{
 .new form label{
     font-size: 1.5rem;
     padding: 0 5px;
-    background-color: var(--White);
     margin: 10px 0;
 }
 
@@ -392,18 +465,18 @@ footer{
     margin: 0 auto;
     outline: none;
     font-size: 1.2rem;
+    background-color: transparent;
     border: transparent;
     border-bottom: 1px solid var(--Black);
 }
 
 .new form select{
-    width: 98%;
     height: 40px;
-    border-radius: 4px;
-    margin: 0 auto;
     outline: none;
-    text-align: center;
-    background-color: var(--White);
+    text-align: left;
+    border: transparent;
+    border-bottom: 1px solid var(--Black);
+    background-color: transparent;
 
     option{
         font-size: 1.2rem;

@@ -11,6 +11,7 @@ import Navigation from "../components/Navigation.astro";
   <div class="new show">
     <form class="createFolder">
       <div class="image">
+        <a class="refresh">Back</a>
         <img src="./icons/folder.svg" alt="folder" class="Icon-Folder" />
       </div>
       <div class="folder-create">
@@ -42,10 +43,6 @@ import Navigation from "../components/Navigation.astro";
     <div class="content">
       <div class="inf">
         <h1>Folders <span class="user-collection"></span></h1>
-        <div class="inf_folder">
-          <label for="search">Search</label>
-          <input type="search" id="search" placeholder="Folder" />
-        </div>
       </div>
       <div class="box">
         <button class="card">
@@ -76,6 +73,12 @@ import Navigation from "../components/Navigation.astro";
     const Icon = document.querySelector(".Icon-Folder");
     const NumberFolders = document.querySelector(".user-collection");
     const box = document.querySelector(".box");
+
+      const backCollection = document
+      .querySelector(".refresh")
+      ?.addEventListener("click", () => {
+        window.location.href = `/Folders`;
+      });
 
     // Renderizar folders
     async function folders(user, username) {
