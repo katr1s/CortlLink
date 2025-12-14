@@ -217,6 +217,10 @@
     color: var(--Black);
     margin: 0;
     position: relative;
+
+    a{
+        user-select: none;
+    }
 }
 
 
