@@ -105,7 +105,7 @@ export const unsubcribe = (id, folder, container) => {
 
           <div class="buttons">
             <button class="${array.Alias}"><img src="/icons/delete.svg" alt="delete" /></button>
-            <a href="https://${array.url}" target="_blank">view</a>
+            <a href="https://${array.url}" target="_blank"><img src="/icons/open.svg" alt="open windows" width: "95px" height: "35px" /></a>
           </div>
       `;
 

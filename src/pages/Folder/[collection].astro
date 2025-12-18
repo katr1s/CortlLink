@@ -16,7 +16,7 @@ const { collection } = Astro.params;
   <div class="link show">
     <form class="form" action="submit">
       <div class="box">
-        <a class="refresh">Back</a>
+        <a class="refresh"> <img src="/icons/arrow_back.svg" width="25px" height="25px" /></a>
         <h2>Save URL</h2>
         <p class="menssage">
           <span>Note:</span> Anchor text (link text) should not begin with a numeral
@@ -60,10 +60,14 @@ const { collection } = Astro.params;
   <div class="hero">
     <div class="button">
       <div class="back">
-        <a href="/Folders">Folder</a>
+        <a href="/Folders">
+          <img src="/icons/folder.svg" width="35px" />
+        </a>
         <h2>/{collection}</h2>
       </div>
-      <button class="CreateLink">New</button>
+      <button class="CreateLink">
+        <img src="/icons/add_link.svg" />
+      </button>
     </div>
     <div class="content"></div>
   </div>

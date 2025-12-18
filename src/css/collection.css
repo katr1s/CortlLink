@@ -87,18 +87,27 @@
 
 .hero .button button {
   font-size: 1.3rem;
-  border-radius: 4px;
   background-color: var(--blue);
   border: transparent;
   color: var(--White);
   padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
 }
 
 .hero .button .back {
   width: 70%;
+  height: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  img{
+    transform: translateY(3px);
+  }
 }
 
 .hero .button h2,
@@ -179,9 +188,12 @@
   text-decoration: none;
   color: var(--White);
   background-color: var(--blue);
-  padding: 5px 10px;
+  padding: 5px;
   font-size: 1rem;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card h3 {
@@ -319,6 +331,12 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.link .refresh{
+  cursor: pointer;
+  border: 1px solid var(--Black);
+  border-radius: 100%;
 }
 
 .link h2 {
