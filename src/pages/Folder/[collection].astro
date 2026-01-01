@@ -1,5 +1,6 @@
 ---
 import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/footer.astro"
 import Select from "../../components/selectplatform.astro";
 import Layout from "../../layouts/Layout.astro";
 import "../../css/collection.css";
@@ -16,7 +17,9 @@ const { collection } = Astro.params;
   <div class="link show">
     <form class="form" action="submit">
       <div class="box">
-        <a class="refresh"> <img src="/icons/arrow_back.svg" width="25px" height="25px" /></a>
+        <a class="refresh">
+          <img src="/icons/arrow_back.svg" width="25px" height="25px" /></a
+        >
         <h2>Save URL</h2>
         <p class="menssage">
           <span>Note:</span> Anchor text (link text) should not begin with a numeral
@@ -52,7 +55,6 @@ const { collection } = Astro.params;
       <div class="box box-mobile">
         <Select />
         <button class="mobile-up">Save</button>
-
       </div>
     </form>
   </div>
@@ -70,6 +72,7 @@ const { collection } = Astro.params;
       </button>
     </div>
     <div class="content"></div>
+  <Footer />
   </div>
 
   <script>
@@ -185,7 +188,6 @@ const { collection } = Astro.params;
           Link.classList.add("show");
 
           window.location.href = `/Folder/${aliasCollection}`;
-
         } catch (error) {
           console.error(error);
         }

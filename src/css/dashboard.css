@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .background{
@@ -73,7 +74,7 @@
 
 .hero .content{
     width: 97%;
-    height: 100%;
+    height: calc(100dvh - 40px);
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -145,7 +146,7 @@
 
 .hero .content .box{
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 90px);
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
     gap: 20px;  
@@ -266,7 +267,7 @@
 }
 
 .hero .content .folder .folder-icon img{
-    width: 70px;
+    width: 110px;
     height: auto;
     border-radius: 100%;
     user-select: none;

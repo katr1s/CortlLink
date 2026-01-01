@@ -5,10 +5,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow-y: hidden;
   
   position: relative;
   z-index: 0;
 }
+
+
 
 .background{
   width: 100%;
@@ -127,7 +130,7 @@
 
 .hero .content {
   width: 97%;
-  height: calc(97% - 50px);
+  height: calc(97% - 60px);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
