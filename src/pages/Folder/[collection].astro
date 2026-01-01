@@ -131,7 +131,7 @@ const { collection } = Astro.params;
             .replace(/\s+/g, "-")
             .replace(/[^a-z0-9-]/g, "");
 
-          const alias = `${aliasCollection.slice(0, 2)}:${safeAlias}`;
+          const alias = `${aliasCollection.slice(0, 2)}-${safeAlias}`;
 
           // ✅ LEER RADIO AQUÍ (CORRECTO)
           const selectedPlatform = document.querySelector(
