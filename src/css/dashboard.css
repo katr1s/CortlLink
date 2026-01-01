@@ -74,7 +74,7 @@
 
 .hero .content{
     width: 97%;
-    height: calc(100dvh - 40px);
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -579,6 +579,6 @@ footer{
 
   .new form .image img{
     margin: 0 auto;
-    width: 125px;
+    width: 250px;
   }
 }
