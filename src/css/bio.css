@@ -94,7 +94,7 @@
   margin: 0;
 }
 
-.content form{
+.content .form{
   width: 100%;
   height: calc(100% - 2rem);
   display: flex;
@@ -102,32 +102,33 @@
   align-items: center;
 }
 
-form .box{
+.form .box{
   width: 50%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  overflow: hidden;
 }
 
-form img{
+.form img{
   width: 80%;
   height: 90%;
 }
 
-form .avatar{
+.form .avatar{
   width: 70%;
   height: 80%;
   border: 1px solid rgba(0, 0, 0, 0.527);
   cursor: pointer;
 }
 
-form h3{
+.form h3{
   font-size: 1rem;
 }
 
-form .box .social{
+.form .box .social{
   width: 100%;
   height: 50px;
   display: flex;
@@ -135,7 +136,7 @@ form .box .social{
   align-items: center;
 }
 
-form .box .social select{
+.form .box .social select{
   width: 20%;
   height: 100%;
   border: transparent;
@@ -144,7 +145,7 @@ form .box .social select{
   border: 1px solid var(--Black);
 }
 
-form .box .social input{
+.form .box .social input{
   width: 65%;
   height: 95%;
   border: transparent;
@@ -154,7 +155,7 @@ form .box .social input{
   padding-left: 5px;
 }
 
-form .box .social button{
+.form .box .social button{
   width: 10%;
   height: 95%;
   border: transparent;
@@ -163,23 +164,88 @@ form .box .social button{
 }
 
 
-form .box .inf{
+.form .box .inf {
   width: 100%;
-  height: calc(100% - 50px - 1rem);
+  height: calc(100% - 50px - 1rem - 55px);
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 1rem; 
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 20px 0;
 }
 
-form .box .pattern{
+
+.form .box .pattern{
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-form .box label{
+.form .box label{
   width: 55px;
   height: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border: 1px solid var(--Black);
+  cursor: pointer;
+
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.form .box .inf .net{
+  width: 150px;
+  height: 50px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--Black);
+
+  img{
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.form .box .inf .net .buttons{
+  width: 100px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  a, button{
+    width: 40px;
+    height: 40px;
+    background-color: var(--blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+
+ .form .box .inf .net .buttons button{
+  background-color: transparent;
+  border: transparent;
+ }
+
+.form .box .inf .net .buttons a, form .box .inf .net .buttons button{
+  img{
+    width: 70%;
+    height: auto;
+  }
+}
+
+input[type="checkbox"] {
+  display: none;
 }

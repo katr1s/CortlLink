@@ -10,82 +10,175 @@ import "../css/bio.css";
     <Navigation />
     <div class="content">
       <h1>New bio</h1>
-      <form>
+      <div class="form formUrl">
         <div class="box">
           <h2>Username</h2>
           <img src="./icons/avatar.png" alt="" class="pattern-bg" />
         </div>
         <div class="box">
           <h3>New social Network</h3>
-          <div class="social">
+          <form class="social">
             <select id="social" required>
               <option value="">Social Network</option>
-              <option value="./github_light.svg">Github</option>
-              <option value="./facebook.png">Facebook</option>
-              <option value="./instagram.png">Instagram</option>
-              <option value="./tiktok.svg">Tik tok</option>
-              <option value="./twitch.svg">Twitch</option>
-              <option value="./x(1).svg">X</option>
-              <option value="./google.svg">Other</option>
+              <option value="/github_light.svg">Github</option>
+              <option value="/facebook.png">Facebook</option>
+              <option value="/instagram.png">Instagram</option>
+              <option value="/tiktok.svg">Tik tok</option>
+              <option value="/twitch.svg">Twitch</option>
+              <option value="/x(1).svg">X</option>
+              <option value="/google.svg">Other</option>
             </select>
             <input type="url" name="" id="New" placeholder="New url" />
             <button>Save</button>
-          </div>
+          </form>
           <h3>Select your background</h3>
           <div class="pattern">
             <label for="music">
-              <input type="checkbox" id="music" name="opt" value="./bio/music.png" data-img="./bio/music.png" />
-              <img src="./bio/music.png" alt="Music">
+              <input
+                type="checkbox"
+                id="music"
+                name="opt"
+                value="./bio/music.png"
+                data-img="./bio/music.png"
+              />
+              <img src="./bio/music.png" alt="Music" />
             </label>
 
             <label for="photo">
-              <input type="checkbox" name="opt" id="photo" value="./bio/photo.png" data-img="./bio/photo.png" />
-              <img src="./bio/photo.png" alt="Music">
+              <input
+                type="checkbox"
+                name="opt"
+                id="photo"
+                value="./bio/photo.png"
+                data-img="./bio/photo.png"
+              />
+              <img src="./bio/photo.png" alt="photo" />
             </label>
 
-            <label>
-              <input type="checkbox" name="opt" value="3" />
-              3
+            <label for="anime">
+              <input
+                type="checkbox"
+                name="opt"
+                id="anime"
+                value="./bio/anime.png"
+                data-img="./bio/anime.png"
+              />
+              <img src="./bio/anime.png" alt="anime" />
             </label>
 
-            <label>
-              <input type="checkbox" name="opt" value="4" />
-              4
+            <label for="write">
+              <input
+                type="checkbox"
+                name="opt"
+                id="write"
+                value="./bio/write.png"
+                data-img="./bio/write.png"
+              />
+              <img src="./bio/write.png" alt="write" />
             </label>
 
-            <label>
-              <input type="checkbox" name="opt" value="5" />
-              5
+            <label for="gamer">
+              <input
+                type="checkbox"
+                name="opt"
+                id="gamer"
+                value="./bio/gamer.png"
+                data-img="./bio/gamer.png"
+              />
+              <img src="./bio/gamer.png" alt="gamer" />
             </label>
           </div>
           <div class="inf"></div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 
   <script>
-  const preview = document.querySelector(".pattern-bg");
-  const checks = document.querySelectorAll('.pattern input[type="checkbox"]');
+    import { auth, db } from "../firebase.js";
+    import { onAuthStateChanged } from "firebase/auth";
+    import { deleteDoc } from "firebase/firestore";
+    import {
+      addDoc,
+      collection,
+      onSnapshot,
+      updateDoc,
+      doc,
+    } from "firebase/firestore";
+    const preview = document.querySelector(".pattern-bg");
+    const checks = document.querySelectorAll('.pattern input[type="checkbox"]');
+    const selectSocial = document.querySelector("#social");
+    const urlSocial = document.querySelector("#New");
+    const inf = document.querySelector(".inf");
 
-  checks.forEach(chk => {
-    chk.addEventListener("change", () => {
+    const formUrl = document.querySelector(".formUrl");
 
-      // Desmarcar los demás → solo uno activo
-      checks.forEach(c => {
-        if (c !== chk) c.checked = false;
+    onAuthStateChanged(auth, async (user) => {
+      const docRef = collection(db, "users", user.uid, "SocialNetwork");
+
+      formUrl.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        await addDoc(docRef, {
+          Social: selectSocial.value,
+          Url: urlSocial.value,
+        });
       });
 
-      // Si está seleccionado, cambiamos la imagen
-      if (chk.checked) {
-        const img = chk.getAttribute("data-img");
-        preview.src = img;
-      } else {
-        // Si lo desmarcan, vuelve al avatar por defecto
-        preview.src = "./bio/music.png";
-      }
-    });
-  });
-</script>
+      const snapshot = onSnapshot(docRef, (Snapshot) => {
+        inf.textContent = "";
 
+        Snapshot.forEach((snap) => {
+          const data = snap.data();
+          const DocId = snap.id;
+
+          const div = document.createElement("div");
+          div.classList.add("net");
+
+          div.innerHTML = `
+            <img src="./Aplications/${data.Social}" />
+            <div class="buttons">
+            <a href="${data.Url}" target="_blank">
+                <img src="./icons/open.svg" />
+            </a>
+            <button class="delete-btn">
+              <img src="./icons/delete.svg" />
+            </button>
+            </div>
+          
+          `;
+          inf.appendChild(div);
+
+          const deleteButton = div.querySelector(".delete-btn");
+
+          deleteButton.addEventListener("click", async () => {
+            try {
+              await deleteDoc(doc(db, "users", user.uid, "SocialNetwork", DocId))
+              div.remove();
+            } catch (error) {
+              console.error("Error delete doc:", error);
+            }
+          });
+        });
+      });
+
+      checks.forEach((chk) => {
+        chk.addEventListener("change", () => {
+          // Desmarcar los demás → solo uno activo
+          checks.forEach((c) => {
+            if (c !== chk) c.checked = false;
+          });
+
+          // Si está seleccionado, cambiamos la imagen
+          if (chk.checked) {
+            const img = chk.getAttribute("data-img");
+            preview.src = img;
+          } else {
+            // Si lo desmarcan, vuelve al avatar por defecto
+            preview.src = "./bio/music.png";
+          }
+        });
+      });
+    });
+  </script>
 </Layout>

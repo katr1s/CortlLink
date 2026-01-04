@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "astro": "^5.13.5",
-    "firebase": "^12.1.0",
+    "firebase": "^12.7.0",
     "jquery": "^3.7.1",
     "select2": "^4.1.0-rc.0"
   },
