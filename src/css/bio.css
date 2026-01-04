@@ -1,0 +1,185 @@
+
+.hero {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: hidden;
+  
+  position: relative;
+  z-index: 0;
+}
+
+
+
+.background{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 0;
+}
+
+/* Fondo grid punteado */
+.background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px);
+  background-size: 20px 20px;
+
+  mask-image:
+    repeating-linear-gradient(
+      to right,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    );
+  mask-composite: intersect;
+
+  /* Safari */
+  -webkit-mask-image:
+    repeating-linear-gradient(
+      to right,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      black 0px,
+      black 3px,
+      transparent 3px,
+      transparent 8px
+    );
+  -webkit-mask-composite: source-in;
+}
+
+/* Asegura que el contenido quede encima del fondo */
+.background > * {
+  position: relative;
+  z-index: 1;
+}
+
+.content{
+  width: 97%;
+  height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  z-index: 2;
+}
+
+.content h1{
+  font-size: 2rem;
+  margin: 0;
+}
+
+.content form{
+  width: 100%;
+  height: calc(100% - 2rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form .box{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+form img{
+  width: 80%;
+  height: 90%;
+}
+
+form .avatar{
+  width: 70%;
+  height: 80%;
+  border: 1px solid rgba(0, 0, 0, 0.527);
+  cursor: pointer;
+}
+
+form h3{
+  font-size: 1rem;
+}
+
+form .box .social{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+form .box .social select{
+  width: 20%;
+  height: 100%;
+  border: transparent;
+  background-color: transparent;
+
+  border: 1px solid var(--Black);
+}
+
+form .box .social input{
+  width: 65%;
+  height: 95%;
+  border: transparent;
+  background-color: transparent;
+  border: 1px solid var(--Black);
+  padding: 0;
+  padding-left: 5px;
+}
+
+form .box .social button{
+  width: 10%;
+  height: 95%;
+  border: transparent;
+  background-color: var(--blue);
+  color: var(--White);
+}
+
+
+form .box .inf{
+  width: 100%;
+  height: calc(100% - 50px - 1rem);
+}
+
+form .box .pattern{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+form .box label{
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

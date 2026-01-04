@@ -1,0 +1,91 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import "../css/bio.css";
+---
+
+<Layout>
+  <div class="hero">
+    <div class="background"></div>
+    <Navigation />
+    <div class="content">
+      <h1>New bio</h1>
+      <form>
+        <div class="box">
+          <h2>Username</h2>
+          <img src="./icons/avatar.png" alt="" class="pattern-bg" />
+        </div>
+        <div class="box">
+          <h3>New social Network</h3>
+          <div class="social">
+            <select id="social" required>
+              <option value="">Social Network</option>
+              <option value="./github_light.svg">Github</option>
+              <option value="./facebook.png">Facebook</option>
+              <option value="./instagram.png">Instagram</option>
+              <option value="./tiktok.svg">Tik tok</option>
+              <option value="./twitch.svg">Twitch</option>
+              <option value="./x(1).svg">X</option>
+              <option value="./google.svg">Other</option>
+            </select>
+            <input type="url" name="" id="New" placeholder="New url" />
+            <button>Save</button>
+          </div>
+          <h3>Select your background</h3>
+          <div class="pattern">
+            <label for="music">
+              <input type="checkbox" id="music" name="opt" value="./bio/music.png" data-img="./bio/music.png" />
+              <img src="./bio/music.png" alt="Music">
+            </label>
+
+            <label for="photo">
+              <input type="checkbox" name="opt" id="photo" value="./bio/photo.png" data-img="./bio/photo.png" />
+              <img src="./bio/photo.png" alt="Music">
+            </label>
+
+            <label>
+              <input type="checkbox" name="opt" value="3" />
+              3
+            </label>
+
+            <label>
+              <input type="checkbox" name="opt" value="4" />
+              4
+            </label>
+
+            <label>
+              <input type="checkbox" name="opt" value="5" />
+              5
+            </label>
+          </div>
+          <div class="inf"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  const preview = document.querySelector(".pattern-bg");
+  const checks = document.querySelectorAll('.pattern input[type="checkbox"]');
+
+  checks.forEach(chk => {
+    chk.addEventListener("change", () => {
+
+      // Desmarcar los demás → solo uno activo
+      checks.forEach(c => {
+        if (c !== chk) c.checked = false;
+      });
+
+      // Si está seleccionado, cambiamos la imagen
+      if (chk.checked) {
+        const img = chk.getAttribute("data-img");
+        preview.src = img;
+      } else {
+        // Si lo desmarcan, vuelve al avatar por defecto
+        preview.src = "./bio/music.png";
+      }
+    });
+  });
+</script>
+
+</Layout>
