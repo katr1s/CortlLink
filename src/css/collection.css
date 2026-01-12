@@ -361,8 +361,11 @@
 
 .link label {
   font-size: 1.4rem;
-  background-color: var(--White);
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .link textarea {
@@ -412,6 +415,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  overflow-y: auto;
 
 
 }
@@ -421,12 +425,17 @@
   width: 100%;
   max-width: 400px;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }
 
 
 .platform-item {
   width: 80%;
-  height: 33%;
+  height: 150px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -434,6 +443,7 @@
   border: 1px solid #334155;
   border-radius: 8px;
   cursor: pointer;
+  background: transparent;
 }
 
 .platform-item input {
