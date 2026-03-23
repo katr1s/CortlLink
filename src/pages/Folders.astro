@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import "../css/dashboard.css";
 import Navigation from "../components/Navigation.astro";
-import Footer from "../components/footer.astro";
 ---
 
 <Layout>
@@ -95,8 +94,8 @@ import Footer from "../components/footer.astro";
         );
         const querySnapshot = await getDocs(InformationFolder);
 
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
+        querySnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
 
           const folderDiv = document.createElement("div");
           folderDiv.className = "folder";
@@ -115,6 +114,7 @@ import Footer from "../components/footer.astro";
           document
             .querySelector(`#${data.Alias}`)
             ?.addEventListener("click", () => {
+              console.log(username)
               deleteFolder(data.userId, username, data.Alias);
             });
         });

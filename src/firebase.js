@@ -27,6 +27,20 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
+export function showToast() {
+    const container = document.getElementById("toast-container");
+
+    const toast = document.createElement("div");
+    toast.className = "toast-notification";
+    toast.innerText = "Eliminated URL";
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+
 // Analytics (⚠️ solo funciona en navegador, no en SSR/Node)
 let analytics;
 if (typeof window !== "undefined") {
@@ -62,23 +76,17 @@ export const Google = async () => {
 async function urlDelete(username, Alias) {
   const apiUrl = import.meta.env.PUBLIC_API_DELETE;
 
-  try {
-    const response = await fetch(`${apiUrl}/${username}/${Alias}`, {
-      method: "DELETE",
-    });
+  const response = await fetch(`${apiUrl}/${username}/${Alias}`, {
+    method: "DELETE",
+  });
 
-    if (response.ok) {
-      alert("Delete URL ✅");
-    } else {
-      alert("Delete URL error ❌");
-      return
-    }
-  } catch (error) {
-    console.error("Error en la petición:", error);
-    alert("⚠️ Ocurrió un error al conectar con el servidor");
+  if (!response.ok) {
+    // Esto detiene la ejecución y salta al 'catch' del padre
+    throw new Error(`Error en API externa para el enlace: ${Alias}`);
   }
-}
 
+  console.log(`Enlace ${Alias} borrado de la API ✅`);
+}
 
 export const unsubcribe = (id, folder, container) => {
   const DocRef = collection(db, "users", id, folder);
@@ -111,25 +119,31 @@ export const unsubcribe = (id, folder, container) => {
 
       container.appendChild(div);
 
-      document.querySelectorAll(`.${array.Alias}`).forEach((btn) =>{
-        btn.addEventListener("click", async ()=>{
-          const RefDocumentDelete = doc(db, "users", `${array.userId}`,`${array.Folder}` ,`${array.Alias}`);
+      document.querySelectorAll(`.${array.Alias}`).forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const RefDocumentDelete = doc(
+            db,
+            "users",
+            `${array.userId}`,
+            `${array.Folder}`,
+            `${array.Alias}`,
+          );
 
-          try{
-            console.log(`users/ ${array.userId}/${array.Folder} /${array.Alias}`)
+          try {
+            console.log(
+              `users/ ${array.userId}/${array.Folder} /${array.Alias}`,
+            );
             urlDelete(array.username, array.Alias);
             await deleteDoc(RefDocumentDelete);
-          }catch(error){
-            console.log(error)
+          } catch (error) {
+            console.log(error);
           }
-
-          
-        })
-      })
+        });
+      });
 
       document.querySelectorAll(`.${array.Alias}-copy`).forEach((btn) => {
         btn.addEventListener("click", async () => {
-          const link = btn.dataset.link; 
+          const link = btn.dataset.link;
           try {
             await navigator.clipboard.writeText(link);
             alert(`URL Copy ✅\n${link}`);
@@ -145,36 +159,40 @@ export const unsubcribe = (id, folder, container) => {
 };
 
 export const deleteFolder = async (id, username, Alias) => {
-  const colRef = collection(db, "users", id, Alias);
-  const apiUrl = import.meta.env.PUBLIC_API_DELETE;
+  // 1. Referencia a la colección de enlaces (la que tiene el nombre del Alias)
+  const linksColRef = collection(db, "users", id, Alias);
+  const folderInfoRef = doc(db, "users", id, "FolderInf", Alias);
+  const userRef = doc(db, "users", id);
 
   try {
-    const snapshot = await getDocs(colRef);
-    const Folder = doc(db, "users", id, "FolderInf", Alias)
-    const docRef = doc(db, "users", id);
+    const snapshot = await getDocs(linksColRef);
 
-    await updateDoc(docRef, {
+    // 2. Usamos MAP para crear un arreglo de promesas de borrado
+    const deletePromises = snapshot.docs.map(async (snap) => {
+      const data = snap.data();
+
+      // Si tienes una lógica de API externa (puedes comentar si no la usas)
+      await urlDelete(username, data.Alias);
+
+      // Borramos el documento individual dentro de la colección 'Alias'
+      const docToId = doc(db, "users", id, Alias, snap.id);
+      return deleteDoc(docToId);
+    });
+
+    // 3. Esperamos a que todos los documentos internos se borren
+    await Promise.all(deletePromises);
+
+    // 4. Una vez vacía la colección, actualizamos el contador del usuario
+    await updateDoc(userRef, {
       CreateCollections: increment(-1),
     });
 
+    // 5. Borramos el documento de información de la carpeta
+    await deleteDoc(folderInfoRef);
 
-    snapshot.forEach( async (snap) => {
-      const data = snap.data();
-
-      urlDelete(username, `${data.Alias}`)
-
-      const DocFolder = doc(db, "users", id, data.Folder, data.Alias)
-      await deleteDoc(DocFolder)
-
-    })
-
-  
-    await deleteDoc(Folder)
+    // 6. Redirección final
     window.location.href = `/Folders`;
-
   } catch (error) {
-    console.error("Error eliminando carpeta:", error);
+    console.error("Error en el proceso de borrado:", error);
   }
 };
-
-

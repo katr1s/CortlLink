@@ -1,0 +1,47 @@
+<div id="toast-container"></div>
+<style>
+  #toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .toast-notification {
+    background: #333;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #4caf50; /* Verde para éxito */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation:
+      slideIn 0.3s ease-out,
+      fadeOut 0.5s 2.5s forwards;
+    font-family: sans-serif;
+    min-width: 200px;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+</style>
+<script type="module">
+
+</script>
