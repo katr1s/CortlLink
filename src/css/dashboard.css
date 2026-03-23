@@ -521,6 +521,10 @@ footer{
     transition: all 0.2s ease;
 }
 
+.buttons-folder button{
+    border: 1px solid var(--Black);
+}
+
 .show{
     display: none;
 }
