@@ -85,7 +85,7 @@ async function urlDelete(username, Alias) {
     throw new Error(`Error en API externa para el enlace: ${Alias}`);
   }
 
-  console.log(`Enlace ${Alias} borrado de la API ✅`);
+  alert(`URL ${Alias} delete for API ✅`);
 }
 
 export const unsubcribe = (id, folder, container) => {
