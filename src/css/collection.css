@@ -6,17 +6,16 @@
   justify-content: flex-start;
   align-items: center;
   overflow-y: hidden;
-  
+
   position: relative;
   z-index: 0;
 }
 
-h4{
+h4 {
   font-family: "Architects Daughter", cursive;
-
 }
 
-.background{
+.background {
   width: 100%;
   height: 100%;
   display: flex;
@@ -81,7 +80,6 @@ h4{
   z-index: 1;
 }
 
-
 .hero .button {
   width: 97%;
   height: 50px;
@@ -111,7 +109,7 @@ h4{
   justify-content: flex-start;
   align-items: center;
 
-  img{
+  img {
     transform: translateY(3px);
   }
 }
@@ -326,8 +324,7 @@ h4{
   z-index: 1;
 }
 
-
-.link .box{
+.link .box {
   width: 50%;
   height: 98%;
   display: flex;
@@ -337,7 +334,7 @@ h4{
   padding: 0 10px;
 }
 
-.link .box .select-plarfom{
+.link .box .select-plarfom {
   width: 98%;
   height: 50px;
   display: flex;
@@ -345,7 +342,7 @@ h4{
   align-items: center;
 }
 
-.link .refresh{
+.link .refresh {
   cursor: pointer;
   border: 1px solid var(--Black);
   border-radius: 100%;
@@ -353,7 +350,7 @@ h4{
 
 .link h2 {
   font-size: 2rem;
-    font-family: "Architects Daughter", cursive;
+  font-family: "Architects Daughter", cursive;
   margin: 0;
 }
 
@@ -367,7 +364,7 @@ h4{
   border: transparent;
   border-bottom: 1px solid var(--Black);
   background-color: transparent;
-    font-family: "Architects Daughter", cursive;
+  font-family: "Architects Daughter", cursive;
 }
 
 .link label {
@@ -378,8 +375,7 @@ h4{
   align-items: center;
   flex-direction: column;
   text-align: center;
-    font-family: "Architects Daughter", cursive;
-
+  font-family: "Architects Daughter", cursive;
 }
 
 .link textarea {
@@ -404,26 +400,27 @@ h4{
   border: 2px solid var(--Black);
   color: var(--Black);
   font-size: 1.6rem;
+  background-color: transparent;
   font-family: "Architects Daughter", cursive;
-    box-shadow: 2px 5px 0px 0px rgba(0,0,0,1);
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    transition: all 0.2s ease;
+  box-shadow: 2px 5px 0px 0px rgba(0, 0, 0, 1);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  transition: all 0.2s ease;
 }
 
-.link button:hover{
+.link button:hover {
   background-color: var(--Black);
   color: var(--White);
 }
 
-.link select{
+.link select {
   height: 50px;
   background-color: transparent;
   outline: none;
   border: 2px solid var(--Black);
   font-size: 1.4rem;
-    font-family: "Architects Daughter", cursive;
-    box-shadow: 2px 5px 0px 0px rgba(0,0,0,1);
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  font-family: "Architects Daughter", cursive;
+  box-shadow: 2px 5px 0px 0px rgba(0, 0, 0, 1);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 }
 
 #platformRadios {
@@ -441,10 +438,7 @@ h4{
   background-size: contain;
   background-position: center;
   overflow-y: auto;
-
-
 }
-
 
 #platformRadios .choseplatform {
   width: 100%;
@@ -454,10 +448,7 @@ h4{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
-
 }
-
 
 .platform-item {
   width: 80%;
@@ -475,18 +466,16 @@ h4{
 .platform-item input {
   accent-color: var(--blue);
   width: 25px;
-  
-  
 }
 
-.platform-item img{
-    width: 25px;
-    height: 25px;
-  }
+.platform-item img {
+  width: 25px;
+  height: 25px;
+}
 
-  .link form .mobile-up{
-    display: none;
-  }
+.link form .mobile-up {
+  display: none;
+}
 
 .show {
   display: none;
@@ -505,7 +494,7 @@ h4{
     margin: 0 auto;
   }
 
-  .link{
+  .link {
     height: auto;
     padding: 0;
   }
@@ -518,25 +507,25 @@ h4{
     flex-direction: column;
     overflow-y: auto;
 
-    textarea{
+    textarea {
       height: 50px;
     }
   }
 
-  .link form .box{
+  .link form .box {
     width: 95%;
   }
 
-  .link form .box-mobile{
+  .link form .box-mobile {
     height: 500px;
     margin-bottom: 20px;
   }
 
-  .link form .mobile-show{
+  .link form .mobile-show {
     display: none;
   }
 
-  .link form .mobile-up{
+  .link form .mobile-up {
     display: flex;
     text-align: center;
     justify-content: center;
