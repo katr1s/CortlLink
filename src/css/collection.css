@@ -353,6 +353,7 @@ h4{
 
 .link h2 {
   font-size: 2rem;
+    font-family: "Architects Daughter", cursive;
   margin: 0;
 }
 
@@ -366,6 +367,7 @@ h4{
   border: transparent;
   border-bottom: 1px solid var(--Black);
   background-color: transparent;
+    font-family: "Architects Daughter", cursive;
 }
 
 .link label {
@@ -376,6 +378,8 @@ h4{
   align-items: center;
   flex-direction: column;
   text-align: center;
+    font-family: "Architects Daughter", cursive;
+
 }
 
 .link textarea {
@@ -397,18 +401,29 @@ h4{
   padding: 10px;
   margin: auto;
   border-radius: 4px;
-  background-color: var(--blue);
-  border: transparent;
-  color: var(--White);
+  border: 2px solid var(--Black);
+  color: var(--Black);
   font-size: 1.6rem;
+  font-family: "Architects Daughter", cursive;
+    box-shadow: 2px 5px 0px 0px rgba(0,0,0,1);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    transition: all 0.2s ease;
+}
+
+.link button:hover{
+  background-color: var(--Black);
+  color: var(--White);
 }
 
 .link select{
   height: 50px;
   background-color: transparent;
   outline: none;
-  border: transparent;
+  border: 2px solid var(--Black);
   font-size: 1.4rem;
+    font-family: "Architects Daughter", cursive;
+    box-shadow: 2px 5px 0px 0px rgba(0,0,0,1);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 }
 
 #platformRadios {
@@ -439,6 +454,7 @@ h4{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 
 }
 

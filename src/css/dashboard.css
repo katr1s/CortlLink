@@ -448,6 +448,7 @@ footer{
         font-size: 1.4rem;
         border: 1px solid var(--Black);
         border-radius: 100%;
+        
     }
 
 
@@ -461,9 +462,11 @@ footer{
 
 .new form h2{
     font-size: 2rem;
+    font-family: "Architects Daughter", cursive;
 }
 
 .new form label{
+    font-family: "Architects Daughter", cursive;
     font-size: 1.5rem;
     padding: 0 5px;
     margin: 10px 0;
@@ -503,13 +506,14 @@ footer{
 }
 
 .new form .buttons-folder button{
-    background-color: var(--blue);
-    border: transparent;
+    font-family: "Architects Daughter", cursive;
+    color: var(--Black);
     cursor: pointer;
     font-size: 1.2rem;
     padding: 10px 20px;
-    border-radius: 4px;
-    color: var(--White);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow: 2px 5px 0px 0px rgba(0,0,0,1);
+    transition: all 0.2s ease;
 }
 
 .show{
