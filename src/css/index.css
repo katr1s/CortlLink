@@ -1,8 +1,6 @@
-
-
 .bg-grid {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
@@ -24,127 +22,266 @@
     100% 100%;
 }
 
+nav {
+  width: 98%;
+  height: 40px;
+  padding: 10px;
+  display: flex;
+  border-radius: 0 0 14px 14px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+  font-family: "Architects Daughter", cursive;
 
-nav{
-    width: 98%;
-    height: 40px;
-    padding: 10px;
-    display: flex;
-    border-radius: 0 0 14px 14px;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 3;
 }
 
-
-nav .logotype{
-    user-select: none;
-    display: flex;
-    justify-content: flex-start;
-    align-items : center;
+nav .logotype {
+  user-select: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-nav .logotype a{
-    font-size: 2rem;
-    text-decoration: none;
-    color: var(--Black);
+nav .logotype a {
+  font-size: 2rem;
+  text-decoration: none;
+  color: var(--Black);
 }
 
-nav .sections{
-    user-select: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
+nav .sections {
+  user-select: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 }
 
-
-nav .sections a{
-    font-size: 1.5rem;
-    text-decoration: none;
-    color: var(--Black);
+nav .sections a {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--Black);
 }
 
-nav .sections button{
-    width: 100px;
-    height: 40px;
-    border-radius: 4px;
-    background-color: var(--Black);
-    border: 1px solid var(--Black);
-    color: var(--White);
-    font-size: 1.2rem;
-    cursor: pointer;
+nav .sections button {
+  width: 100px;
+  height: 40px;
+  border-radius: 4px;
+  font-family: "Architects Daughter", cursive;
+  background-color: var(--Black);
+  border: 1px solid var(--Black);
+  color: var(--White);
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
-nav .sections button:hover{
-    background-color: var(--Aquamarine);
-    color: var(--Black);
+nav .sections button:hover {
+  background-color: var(--Aquamarine);
+  color: var(--Black);
+  transition: 0.5s;
+}
+
+.hero {
+  width: 96%;
+  height: calc(100vh - 40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  color: var(--Black);
+  z-index: 9999;
+}
+
+.hero h1 {
+  max-width: 70%;
+  text-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 6rem;
+  margin: 0;
+  font-family: "Architects Daughter", cursive;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 80px;
+  letter-spacing: -0.5px;
+  margin: 30px 0;
+}
+
+.hero h1 span {
+  font-size: 6rem;
+  background: linear-gradient(90deg, var(--blue) 40%, var(--Blue_light));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 1.5rem;
+  color: var(--Black_light);
+  margin: 0;
+  font-family: "Architects Daughter", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.hero h3 {
+  font-size: 1.1rem;
+  color: var(--Black);
+  margin: 0;
+  font-family: "Architects Daughter", cursive;
+  font-weight: 400;
+  font-style: normal;
+  position: absolute;
+  opacity: 0.7;
+  border: 2px solid #000;
+  /* El truco del borde irregular */
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  box-shadow: 2px 5px 0px 0px rgba(0,0,0,1);
+  transition: all 0.2s ease;
+}
+
+.hero h3:hover{
+    transform: scale(1.05);
     transition: 0.5s;
+    cursor:default;
+    opacity: 0.9;
 }
 
-.hero{
-    width: 96%;
-    height: calc(100vh - 40px);
+.hero .left {
+  top: 60%;
+  left: 20%;
+}
+
+.hero .right {
+  top: 65%;
+  right: 20%;
+}
+
+.hero button {
+  width: auto;
+  padding: 10px 30px;
+  height: 55px;
+  /* Usamos un borde irregular para el look de "tiza/dibujo" */
+  border: 2px solid var(--White); 
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; 
+  
+  background-color: transparent;
+  color: var(--Black);
+  border: 1px solid var(--Black);
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin: 20px;
+  font-family: "Architects Daughter", cursive;
+  
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: 0 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.hero button:hover {
+  /* Se inclina ligeramente como un boceto manual */
+  transform: rotate(-2deg) scale(1.05);
+  
+  /* Resplandor tipo neón que sale del cuaderno */
+  background-color: #5d5dff; /* Un azul más vibrante */
+  box-shadow: 0 0 15px var(--blue), 
+              0 0 30px rgba(93, 93, 255, 0.4);
+  
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  color: var(--White);
+  border: transparent;
+}
+
+/* Efecto de "Brillo" que cruza el botón */
+.hero button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 20%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(30deg);
+  transition: all 0.5s;
+}
+
+.hero button:hover::after {
+  left: 120%;
+}
+
+
+.about-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: transparent;
+  }
+
+  .about-section h2 {
+    font-family: "Architects Daughter", cursive;
+    font-size: 2.5rem;
+    color: var(--Black);
+    margin-bottom: 40px;
+    text-decoration: underline wavy rgba(255, 255, 255, 0.3);
+  }
+
+  .features-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 10px;
-    color: var(--Black);
-    z-index: 9999;
-}
+    gap: 30px;
+    flex-wrap: wrap;
+  }
 
-.hero h1{
-    width: 850px;
-    text-wrap: wrap;
+  .feature-note {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    width: 280px;
+    border-radius: 2px;
+    /* Efecto de papel cortado a mano */
+    clip-path: polygon(0% 0%, 100% 0%, 98% 98%, 2% 100%);
+    transition: transform 0.3s ease;
+  }
+
+  .note-1 { transform: rotate(-2deg); border-bottom: 3px solid #ffde59; }
+  .note-2 { transform: rotate(1deg); border-bottom: 3px solid var(--blue); }
+  .note-3 { transform: rotate(-1deg); border-bottom: 3px solid #ff5757; }
+
+  .feature-note:hover {
+    transform: scale(1.05) rotate(0deg);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .feature-note h3 {
+    font-family: "Architects Daughter", cursive;
+    margin-bottom: 15px;
+  }
+
+  .feature-note p {
+    font-size: 1rem;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+
+@media screen and (max-width: 768px) {
+  .hero h1 {
+    font-size: 4rem;
     text-align: center;
-    justify-content: center;
-    align-items: center;
-    font-size: 6rem;
-    margin: 0;
-}
+    width: 100%;
+    line-height: 60px;
+  }
 
-.hero h1 span{
-    font-size: 6rem;
-    background  : linear-gradient(90deg, var(--blue), var(--Blue_light));
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-bottom: 1px solid var(--blue);
-}
-
-.hero h2{
+  .hero h2 {
+    text-align: center;
     font-size: 1.5rem;
-    color: var(--Black_light);
-}
+  }
 
+  .hero h3{
+    display: none;
+  }
 
-
-.hero button{
-    width: auto;
-    padding: 10px 20px;
-    height: 50px;
-    border-radius: 24px;
-    background-color: var(--blue);
-    color: var(--White);
-    font-size: 1.2rem;
-    border: transparent;
-    cursor: pointer;
-}
-
-
-@media screen and (max-width: 768px){
-    .hero h1{
-        font-size: 4rem;
-        text-align: center;
-        width: 100%;
-    }
-
-    .hero h2{
-        text-align: center;
-        font-size: 1.5rem;
-    }
-
-    .hero h1 span{
-        font-size: 4rem;
-    }
+  .hero h1 span {
+    font-size: 4rem;
+  }
 }

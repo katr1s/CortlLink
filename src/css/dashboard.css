@@ -125,7 +125,8 @@
 }
 
 .hero .content h1{
-    
+    font-family: "Architects Daughter", cursive;
+    font-weight: 400;
     font-size: 3rem;
     display: flex;
     justify-content: center;
@@ -142,6 +143,7 @@
     align-items: center;
     margin-left: 10px;
     opacity: 0.4;
+    rotate: -3deg;
 }
 
 .hero .content .box{
@@ -169,6 +171,7 @@
 }
 
 .hero .content .card h2{
+    font-family: "Architects Daughter", cursive;
     width: 97%;
     height: 37.5px;
     display: flex;
@@ -233,12 +236,13 @@
 }
 
 .hero .content .folder .header h2{
+    font-family: "Architects Daughter", cursive;
     width: 70%;
     height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

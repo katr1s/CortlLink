@@ -11,7 +11,10 @@
   z-index: 0;
 }
 
+h4{
+  font-family: "Architects Daughter", cursive;
 
+}
 
 .background{
   width: 100%;
@@ -115,6 +118,8 @@
 
 .hero .button h2,
 .hero .button a {
+  font-family: "Architects Daughter", cursive;
+  font-weight: 400;
   font-size: 2rem;
   text-decoration: none;
   color: var(--Black);
@@ -200,6 +205,8 @@
 }
 
 .card h3 {
+  font-family: "Architects Daughter", cursive;
+  line-height: 35px;
   width: 100%;
   height: auto;
   overflow: hidden;
@@ -208,12 +215,14 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0;
-  font-size: 2.4rem;
+  font-size: 2.1rem;
+  font-weight: 500;
   text-overflow: ellipsis;
   position: relative;
 }
 
 .card p {
+  font-family: "Architects Daughter", cursive;
   width: 100%;
   height: auto;
   max-height: 30%;
