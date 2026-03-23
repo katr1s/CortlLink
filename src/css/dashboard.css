@@ -490,7 +490,11 @@ footer{
     text-align: left;
     border: transparent;
     border-bottom: 1px solid var(--Black);
-    background-color: transparent;
+    background: transparent;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow: 2px 5px 0px 0px rgba(0,0,0,1);
+    border: 1px solid var(--Black);
+    transition: all 0.2s ease;
 
     option{
         font-size: 1.2rem;
